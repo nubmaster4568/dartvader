@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Լիցքավորել Page</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sometype+Mono:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+    <style>.chakra-input.css-dni0pk {
+        font-family: "Sometype Mono", monospace;
+        font-optical-sizing: auto;
+        font-weight: 400;
+        font-style: normal;
+        font-size: 17px; /* Adjust the font size if needed */
+    }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="balance-text">0.00 $</div>
+        <a href="index.html" class="blue-balance-link">
+            <button class="blue-balance">
+                Վերադարնալ
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M15 19l-7-7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </button>
+        </a>
+    </nav>
+
+    <div class="Լիցքավորել-content">
+        <div class="Լիցքավորել-text">Իմ հաշիվը</div>
+        <div class="wallet-block">
+            <div class="wallet-title">Ձեր անձնական LTC դրամապանակի հասցեն լիցքավորումների համար </div>
+            <div class="wallet-field">
+                <div class="css-1rzo072">
+                    <input 
+                        readonly 
+                        aria-readonly="true" 
+                        class="chakra-input css-dni0pk" 
+                        value=""
+                        id="wallet-address"
+                        style="color: rgb(213 226 255); font-size: 17px;"
+                    >
+                    <button 
+                        type="button" 
+                        class="chakra-button css-1flfxcl"
+                        id="copy-button"
+                    >
+                        <svg 
+                            viewBox="0 0 24 24" 
+                            focusable="false" 
+                            class="chakra-icon css-pv6ryy" 
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path 
+                                stroke="currentColor" 
+                                stroke-linecap="round" 
+                                stroke-linejoin="round" 
+                                stroke-width="2" 
+                                d="M5 15c-.932 0-1.398 0-1.765-.152a2 2 0 01-1.083-1.083C2 13.398 2 12.932 2 12V5.2c0-1.12 0-1.68.218-2.108a2 2 0 01.874-.874C3.52 2 4.08 2 5.2 2H12c.932 0 1.398 0 1.765.152a2 2 0 011.083 1.083C15 3.602 15 4.068 15 5m-2.8 17h6.6c1.12 0 1.68 0 2.108-.218a2 2 0 00.874-.874C22 20.48 22 19.92 22 18.8v-6.6c0-1.12 0-1.68-.218-2.108a2 2 0 00-.874-.874C20.48 9 19.92 9 18.8 9h-6.6c-1.12 0-1.68 0-2.108.218a2 2 0 00-.874.874C9 10.52 9 11.08 9 12.2v6.6c0 1.12 0 1.68.218 2.108a2 2 0 00.874.874C10.52 22 11.08 22 12.2 22z"
+                            ></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <a target="_blank" class="chakra-link css-ktc5z7" href="https://t.me/ShokoStory">
+                <!-- SVG Icon -->
+                <svg viewBox="0 0 16 16" focusable="false" class="chakra-icon css-1lgem63" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 12l8-8m0 0H6.667M12 4v5.333"></path>
+                </svg>
+                <!-- Text Content -->
+                <div class="css-1e6ma0l">Գնել LTC</div>
+            </a>
+            <div class="chakra-link css-ktc5z7">
+                <!-- SVG Icon -->
+                <svg viewBox="0 0 16 16" focusable="false" class="chakra-icon css-1lgem63" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 12l8-8m0 0H6.667M12 4v5.333"></path>
+                </svg>
+                <!-- Text Content -->
+                <div class="css-1e6ma0l">Aktivacnel Promocode</div>
+            </div>
+
+        </div>
+    </div>
+    <div id="confirmationModal" class="modal">
+        <div class="modal-content">
+            <h2>Վստա՞հ եք</h2>
+            <p>Խնդրում ենք ուշադիր նայեք տեղանքը, միայն դրանից հետո կապվեք մեզ հետ:
+
+            Խնդրում ենք նկատի ունենալ, որ կեղծ մեղադրանքի համար կարող եք արգելափակվել մեր հարթակում</p>
+            <button id="confirmRedirect" class="modal-button">Վստահ եմ</button>
+            <button id="cancelRedirect" class="modal-button">Չեղարկել</button>
+        </div>
+    </div>
+    <div id="promoModal" class="modal">
+        <div class="modal-content">
+            <h2>Ակտիվացնել պռոմոկոդ</h2>
+            <p>Հավաքեք ձեր պռոմոկոդը</p>
+            <label for="promocode">Պռոմոկոդ:</label>
+            <input type="text" id="promocode" name="promocode" placeholder="Մուտքագրեք Պռոմոկոդը" class="promocode-input">
+
+            <button id="confirmPromocode" class="modal-button">Ակտիվացնել</button>
+
+        </div>
+    </div>
+
+    <div id="orderModal" class="modal" style="display: none;">
+        <div class="modal-content">
+
+
+        </div>
+    </div>
+    <div class="Լիցքավորել-content2">
+        <div class="Լիցքավորել-text">Պատմություն</div>
+        <div class="wallet-block2">
+
+
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>document.addEventListener('DOMContentLoaded', function() {
+        const copyButton = document.getElementById('copy-button');
+        const walletAddressInput = document.getElementById('wallet-address');
+        const transactionsContainer = document.querySelector('.wallet-block2');
+        const $balanceText = $('.balance-text');
+
+        // Function to get URL parameters
+        function getUrlParameter(name) {
+            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+            const regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+            const results = regex.exec(location.search);
+            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+        }
+    
+        const userId = getUrlParameter('userId');
+    
+        if (userId) {
+            sessionStorage.setItem('user', userId);
+            checkUserAndCreateWallet(userId);
+            // Append userId to all links
+            $('a').each(function() {
+                var href = $(this).attr('href');
+                if (href) {
+                    if (href.indexOf('?') !== -1) {
+                        $(this).attr('href', href + '&userId=' + userId);
+                    } else {
+                        $(this).attr('href', href + '?userId=' + userId);
+                    }
+                }
+            });
+            $.ajax({
+            url: 'https://vader-g34v.onrender.com/api/getBalance', // Endpoint to fetch balance
+            method: 'GET',
+            data: { userId: userId },
+            success: function(response) {
+                if (response && response.balance !== undefined) {
+                    // Ensure balance is a number
+                    let balance = parseFloat(response.balance);
+                    if (!isNaN(balance)) {
+                        $balanceText.text(`${balance.toFixed(2)} $`);
+                    } else {
+                        console.error('Balance is not a valid number:', response.balance);
+                    }
+                } else {
+                    console.error('Invalid balance response:', response);
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error('Error fetching balance:', status, error);
+            }
+        });
+        }
+    
+        // Function to check user and create wallet
+        function checkUserAndCreateWallet(userId) {
+            $.ajax({
+                url: 'https://vader-g34v.onrender.com/api/check-user',
+                method: 'POST',
+                data: JSON.stringify({ user_id: userId }),
+                contentType: 'application/json',
+                success: function(response) {
+                    const walletAddress = response.walletAddress;
+                    sessionStorage.setItem('wallet', walletAddress);
+    
+                    typeWalletAddress(walletAddress, walletAddressInput, 50);
+                    fetchTransactions(walletAddress);
+                },
+                error: function() {
+                    console.error('Failed to check user.');
+                }
+            });
+        }
+    
+        // Function to type out wallet address
+        function typeWalletAddress(address, inputElement, speed) {
+            let index = 0;
+            const intervalId = setInterval(() => {
+                inputElement.value += address.charAt(index);
+                index++;
+                if (index >= address.length) {
+                    clearInterval(intervalId);
+                }
+            }, speed);
+        }
+    
+        // Function to fetch user transactions
+        function fetchTransactions(walletAddress) {
+    console.log('Fetching transactions for wallet address:', walletAddress);
+    
+    $.ajax({
+        url: 'https://vader-g34v.onrender.com/api/get-user-transactions',
+        method: 'POST',
+        data: JSON.stringify({ address: walletAddress, userId: userId }),
+        contentType: 'application/json',
+        success: function(response) {
+            console.log('Response received from API:', response);
+            
+            if (response.flag === 1 && response.data) {
+                console.log('Transactions data:', response.data);
+                populateTransactions(response.data);
+            } else {
+                console.error('Failed to retrieve transactions:', response);
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error('Failed to fetch transactions.');
+            console.error('Status:', status);
+            console.error('Error:', error);
+            console.error('XHR:', xhr);
+        }
+    });
+}
+async function getTransactionData(transactionId) {
+    try {
+        const response = await fetch(`/check-transaction?txId=${transactionId}`);
+        const result = await response.json();
+        return result.exists ? result : null; // If data exists, return the entire result
+    } catch (error) {
+        console.error('Error fetching transaction data:', error);
+        return null;
+    }
+}
+
+    
+        // Function to populate transactions in the container
+        async function populateTransactions(transactions) {
+    transactionsContainer.innerHTML = '';
+    console.log(transactions)
+    for (const tx of transactions) {
+        const transactionElement = document.createElement('div');
+        transactionElement.className = 'transaction';
+
+        // Check if the transaction ID exists in the transactions table
+        const transactionData = await getTransactionData(tx.id);
+
+        transactionElement.innerHTML = `
+            <div class="transaction-date">${tx.date}</div>
+            <div class="transaction-amount">${tx.amount} LTC</div>
+            <div class="transaction-status ${tx.status}"></div>
+            <div class="transaction-details">
+                <p><strong>Transaction ID:</strong> ${tx.id}</p>
+                <p><strong>URL:</strong> <a href="${tx.explorer_url}" style="color: #007aff;" target="_blank">${tx.explorer_url}</a></p>
+                <p><strong>Հաստատումներ:</strong> ${tx.confirmations}</p>
+                ${transactionData ? `<button class="order-information" data-txid="${tx.id}">Պատվերի տվյալներ</button>` : ''}
+                <button class="not-found-button">Ես չգտա իմ ապրանքը</button>
+            </div>
+        `;
+
+        transactionsContainer.appendChild(transactionElement);
+    }}
+        hideModal();
+
+
+function showModal() {
+    document.getElementById('confirmationModal').style.display = 'flex';
+}
+function showModalPromo() {
+    document.getElementById('promoModal').style.display = 'flex';
+}
+function showModalOrder() {
+    document.getElementById('orderModal').style.display = 'flex';
+}
+// Hide the modal
+function hideModal() {
+    document.getElementById('confirmationModal').style.display = 'none';
+    document.getElementById('orderModal').style.display = 'none';
+    document.getElementById('promoModal').style.display = 'none';
+
+}
+
+
+
+document.querySelectorAll('.order-information').forEach(button => {
+        button.addEventListener('click', async (event) => {
+            const txId = event.target.getAttribute('data-txid');
+            await showOrderModal(txId);
+        });
+    });
+
+
+
+    async function showOrderModal(txId) {
+    const transactionData = await getTransactionData(txId);
+    console.log(transactionData, 'transaction data');
+
+    if (transactionData) {
+        // Prepare the Swiper slider container
+        let imageSlider = `
+            <div class="swiper-container">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <img src="data:image/jpeg;base64,${transactionData.location_image}" alt="Location Image" style="width: 100%;">
+                    </div>
+        `;
+
+        // Add the additional image if it exists
+        if (transactionData.additional_image) {
+            imageSlider += `
+                <div class="swiper-slide">
+                    <img src="data:image/jpeg;base64,${transactionData.additional_image}" alt="Additional Image" style="width: 100%;">
+                </div>
+            `;
+        }
+
+        imageSlider += `
+                </div>
+                <!-- Add Pagination -->
+                <div class="swiper-pagination"></div>
+            </div>
+        `;
+
+        // Populate the modal with transaction details and the image slider
+        document.querySelector('#orderModal .modal-content').innerHTML = `
+            <p><strong>Transaction ID:</strong> ${transactionData.transaction_id}</p>
+<div class="wallet-field" style="margin-bottom: 20px;">
+                <div class="css-1rzo072">
+                    <input readonly="" aria-readonly="true" class="chakra-input css-dni0pk" value="${transactionData.lat},${transactionData.lng}" id="order-coordinates" style="color: rgb(213 226 255); font-size: 17px;">
+                    <button type="button" class="chakra-button css-1flfxcl" id="copy-button2">
+                        <svg viewBox="0 0 24 24" focusable="false" class="chakra-icon css-pv6ryy" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15c-.932 0-1.398 0-1.765-.152a2 2 0 01-1.083-1.083C2 13.398 2 12.932 2 12V5.2c0-1.12 0-1.68.218-2.108a2 2 0 01.874-.874C3.52 2 4.08 2 5.2 2H12c.932 0 1.398 0 1.765.152a2 2 0 011.083 1.083C15 3.602 15 4.068 15 5m-2.8 17h6.6c1.12 0 1.68 0 2.108-.218a2 2 0 00.874-.874C22 20.48 22 19.92 22 18.8v-6.6c0-1.12 0-1.68-.218-2.108a2 2 0 00-.874-.874C20.48 9 19.92 9 18.8 9h-6.6c-1.12 0-1.68 0-2.108.218a2 2 0 00-.874.874C9 10.52 9 11.08 9 12.2v6.6c0 1.12 0 1.68.218 2.108a2 2 0 00.874.874C10.52 22 11.08 22 12.2 22z"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            ${imageSlider}
+        `;
+        $(document).on('click', '#copy-button2', function(event) {
+            const orderCoordinatesValue = document.getElementById('order-coordinates').value;
+            console.log(orderCoordinatesValue)
+            navigator.clipboard.writeText(orderCoordinatesValue).then(() => {
+            }).catch(err => {
+                console.error('Failed to copy wallet address:', err);
+            });
+        });
+        // Show the modal
+        showModalOrder();
+
+        // Initialize Swiper without navigation buttons
+        new Swiper('.swiper-container', {
+            loop: true,
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            spaceBetween: 10, // Adjusts space between slides
+        });
+    } else {
+        alert('No transaction data found.');
+    }
+}
+
+
+// Function to initialize the image slider
+function initSlider() {
+    let slideIndex = 0;
+    const slides = document.querySelectorAll('.slide');
+    const prevButton = document.querySelector('.prev');
+    const nextButton = document.querySelector('.next');
+
+    // Show the first slide
+    showSlide(slideIndex);
+
+    // Event listeners for next/prev buttons
+    nextButton.addEventListener('click', () => {
+        showSlide(slideIndex += 1);
+    });
+
+    prevButton.addEventListener('click', () => {
+        showSlide(slideIndex -= 1);
+    });
+
+    // Function to display the correct slide
+    function showSlide(index) {
+        if (index >= slides.length) {
+            slideIndex = 0;
+        } else if (index < 0) {
+            slideIndex = slides.length - 1;
+        }
+        
+        slides.forEach((slide, i) => {
+            slide.style.display = (i === slideIndex) ? 'block' : 'none';
+        });
+    }
+}
+hideModal()
+// Show the order modal
+function showModalOrder() {
+    document.getElementById('orderModal').style.display = 'flex';
+}
+
+// Hide modals
+function hideModal() {
+    document.getElementById('confirmationModal').style.display = 'none';
+    document.getElementById('orderModal').style.display = 'none';
+    document.getElementById('promocodeModal').style.display = 'none';
+
+}
+// Event handler for the .not-found-button click event
+$(document).on('click', '.not-found-button', function(event) {
+    event.stopPropagation(); // Prevents the click event from triggering the toggle
+
+    // Show the confirmation modal
+    showModal();
+    
+    // Set up the confirm button to redirect on click
+    document.getElementById('confirmRedirect').onclick = function() {
+        window.location.href = 'https://t.me/DarthVader420';
+    };
+
+    // Set up the cancel button to close the modal on click
+    document.getElementById('cancelRedirect').onclick = function() {
+        hideModal();
+    };
+});
+$(document).on('click', '.css-ktc5z7', function(event) {
+    event.stopPropagation(); // Prevents the click event from triggering the toggle
+
+    // Show the confirmation modal
+    showModalPromo();
+    
+    // Set up the confirm button to redirect on click
+
+});
+$(document).on('click', '.order-inforamtion', function(event) {
+    event.stopPropagation(); // Prevents the click event from triggering the toggle
+
+    // Show the confirmation modal
+    showModalOrder();
+    
+
+});
+
+// Close the modal if the user clicks outside of the modal content
+window.onclick = function(event) {
+    if (event.target.classList.contains('modal')) {
+        hideModal();
+    }
+};
+        
+        // Copy wallet address to clipboard
+        $('#copy-button').click(function() {
+            const walletAddress = walletAddressInput.value;
+            navigator.clipboard.writeText(walletAddress).then(() => {
+                alert('Wallet address copied to clipboard!');
+            }).catch(err => {
+                console.error('Failed to copy wallet address:', err);
+            });
+        });
+    
+        // Toggle transaction details on click
+        $(document).on('click', '.transaction', function(event) {
+    // Check if the click target is not inside .not-found-button
+    if (!$(event.target).closest('.not-found-button').length && !$(event.target).closest('.order-inforamtion').length) {
+        // Toggle the expanded class on the transaction
+        $(this).toggleClass('expanded');
+    }
+});
+    });
+    </script>
+</body>
+</html>

@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Map with Product Locations</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.9.0/mapbox-gl.css' rel='stylesheet' />
+    <link rel="stylesheet" href="style.css" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sometype+Mono:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+    <style>.chakra-input.css-dni0pk {
+        font-family: "Sometype Mono", monospace;
+        font-optical-sizing: auto;
+        font-weight: 400;
+        font-style: normal;
+        font-size: 17px; /* Adjust the font size if needed */
+    }</style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="balance-text">0.00 $</div>
+        <a href="index.html" class="blue-balance-link">
+            <button class="blue-balance">
+                Վերադառնալ 
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M15 19l-7-7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </button>
+        </a>
+    </nav>
+    
+    <div class="sections">
+        <div class="section-block">
+          <div class="section-step">1</div>
+          <div class="section-title">
+            Կատարեք լիցքավորում
+          </div>
+            <div class="wallet-title2">Ձեր անձնական LTC դրամապանակի հասցեն վճարման համար </div>
+            <div class="wallet-field">
+                <div class="css-1rzo0722">
+                    <input readonly="" aria-readonly="true" class="chakra-input css-dni0pk" value="" id="wallet-address" style="color: rgb(213 226 255); font-size: 17px;">
+                    <button type="button" class="chakra-button css-1flfxcl" id="copy-button">
+                        <svg viewBox="0 0 24 24" focusable="false" class="chakra-icon css-pv6ryy" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15c-.932 0-1.398 0-1.765-.152a2 2 0 01-1.083-1.083C2 13.398 2 12.932 2 12V5.2c0-1.12 0-1.68.218-2.108a2 2 0 01.874-.874C3.52 2 4.08 2 5.2 2H12c.932 0 1.398 0 1.765.152a2 2 0 011.083 1.083C15 3.602 15 4.068 15 5m-2.8 17h6.6c1.12 0 1.68 0 2.108-.218a2 2 0 00.874-.874C22 20.48 22 19.92 22 18.8v-6.6c0-1.12 0-1.68-.218-2.108a2 2 0 00-.874-.874C20.48 9 19.92 9 18.8 9h-6.6c-1.12 0-1.68 0-2.108.218a2 2 0 00-.874.874C9 10.52 9 11.08 9 12.2v6.6c0 1.12 0 1.68.218 2.108a2 2 0 00.874.874C10.52 22 11.08 22 12.2 22z"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <a target="blank" class="chakra-link css-ktc5z2" href="https://t.me/DarthVader420"><svg viewBox="0 0 16 16" focusable="false" class="chakra-icon css-1lgem63" xmlns="http://www.w3.org/2000/svg"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 12l8-8m0 0H6.667M12 4v5.333"></path></svg><div class="css-1e6ma0l">Գնել LTC</div></a>
+            <button id="cancel-transaction" class="cancel-button">Չեղարկել գործարքը</button>
+
+        </div>
+
+        <div class="section-block" id="second-block">
+          <div class="section-step"><div>2</div></div>
+          <div class="section-title">
+            Վճարման տվյալները
+          </div>
+          <div class="section-caption">
+           
+          </div>
+
+          <div class="css-1qm1lh"><div class="css-uusoxa"><div class="css-kr151x">Գումարը LTC-ով:</div><div class="css-138ot80"><div class="css-1m7ritw1">0.00</div></div></div><div class="css-uusoxa"><div class="css-kr151x">Գումարը USD-ով:</div><div class="css-138ot80"><div class="css-y3pmzh"></div><div class="css-1m7ritw">0 LTC</div></div></div><div class="css-uusoxa"><div class="css-kr151x">հաստատման տևողություն</div><div class="css-138ot80"><div class="css-1m7ritw">1-3 րոպե</div></div></div></div>
+
+        </div> 
+      </div>
+
+
+    
+
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src='https://api.mapbox.com/mapbox-gl-js/v2.9.0/mapbox-gl.js'></script>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
+    <script>document.addEventListener('DOMContentLoaded', function() {
+        const copyButton = document.getElementById('copy-button');
+        const walletAddressInput = document.getElementById('wallet-address');
+        const priceDiv = document.querySelector('.css-1m7ritw');
+        const LTCDiv = document.querySelector('.css-1m7ritw1');
+        const cancelButton = document.getElementById('cancel-transaction');
+        cancelButton.disabled = true;
+        const $balanceText = $('.balance-text');
+
+    // Enable the cancel button after 2 seconds
+    setTimeout(() => {
+        cancelButton.disabled = false;
+    }, 2000);
+        function getUrlParameter(name) {
+            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+            const regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+            const results = regex.exec(location.search);
+            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+        }
+    
+        const price = getUrlParameter('price');
+        const userId = getUrlParameter('userId');
+        const productId = getUrlParameter('productId');
+    
+        function cancelTransaction(userId, productId) {
+            $.ajax({
+                url: 'https://vader-g34v.onrender.com/api/deleteTransaction', // Update to your server endpoint
+                method: 'POST',
+                data: JSON.stringify({
+                    userId: userId,
+                    productId: productId
+                }),
+                contentType: 'application/json',
+                success: function(response) {
+                    alert('Գործարքը հաջողությամբ չեղարկվեց:');
+                    window.location.href = `index.html?userId=${userId}`;
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.error('Failed to cancel transaction:', textStatus, errorThrown);
+                    window.location.href = `index.html?userId=${userId}`;
+                }
+            });
+        }
+    
+        if (priceDiv) {
+            priceDiv.textContent = `${price}`;
+        }
+    
+        if (userId) {
+            sessionStorage.setItem('user', userId);
+            checkUserAndCreateWallet(userId);
+            updateLinksWithUserId(userId);
+        }
+    
+        $.ajax({
+            url: 'https://api.coingecko.com/api/v3/simple/price',
+            method: 'GET',
+            data: {
+                ids: 'litecoin',
+                vs_currencies: 'usd'
+            },
+            success: function(response) {
+                if (response.litecoin) {
+                    const ltcprice = response.litecoin.usd;
+                    const amountInLTC = parseFloat(price) / ltcprice;
+                    if (LTCDiv) {
+                        LTCDiv.textContent = `${amountInLTC.toFixed(3)} LTC`;
+                    }
+                        setTimeout(() => {
+                            createTransaction(userId, price, amountInLTC, sessionStorage.getItem('wallet'));
+                        }, 800);
+
+                } else {
+                    console.error('Litecoin data not available');
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.error('AJAX request failed:', textStatus, errorThrown);
+            }
+            
+        });
+        $.ajax({
+            url: 'https://vader-g34v.onrender.com/api/getBalance', // Endpoint to fetch balance
+            method: 'GET',
+            data: { userId: userId },
+            success: function(response) {
+                if (response && response.balance !== undefined) {
+                    // Ensure balance is a number
+                    let balance = parseFloat(response.balance);
+                    if (!isNaN(balance)) {
+                        $balanceText.text(`${balance.toFixed(2)} $`);
+                    } else {
+                        console.error('Balance is not a valid number:', response.balance);
+                    }
+                } else {
+                    console.error('Invalid balance response:', response);
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error('Error fetching balance:', status, error);
+            }
+        });
+    
+        function checkUserAndCreateWallet(userId) {
+            $.ajax({
+                url: 'https://vader-g34v.onrender.com/api/check-user',
+                method: 'POST',
+                data: JSON.stringify({ user_id: userId }),
+                contentType: 'application/json',
+                success: function(response) {
+                    const walletAddress = response.walletAddress;
+                    sessionStorage.setItem('wallet', walletAddress);
+                    typeWalletAddress(walletAddress, walletAddressInput, 50); // Adjust speed (ms) as needed
+                },
+                error: function() {
+                    console.error('Failed to check user.');
+                }
+            });
+        }
+    
+        function typeWalletAddress(address, inputElement, speed) {
+            let index = 0;
+            const intervalId = setInterval(() => {
+                inputElement.value += address.charAt(index);
+                index++;
+                if (index >= address.length) {
+                    clearInterval(intervalId);
+                }
+            }, speed); // Use the provided speed
+        }
+    
+        function updateLinksWithUserId(userId) {
+            $('a').each(function() {
+                let href = $(this).attr('href');
+                if (href) {
+                    if (href.indexOf('?') !== -1) {
+                        $(this).attr('href', href + '&userId=' + userId);
+                    } else {
+                        $(this).attr('href', href + '?userId=' + userId);
+                    }
+                }
+            });
+        }
+    
+        function createTransaction(userId, price, ltcAmount, walletAddress) {
+            console.log(userId, price, ltcAmount, walletAddress, productId)
+            $.ajax({
+                url: 'https://vader-g34v.onrender.com/api/create-transaction', // Replace with your server endpoint
+                method: 'POST',
+                data: JSON.stringify({
+                    user_id: userId,
+                    price: price,
+                    amount_in_ltc: ltcAmount,
+                    product_id: productId,
+                    wallet_address: walletAddress
+                }),
+                contentType: 'application/json',
+                success: function(response) {
+                    if (response === 'Duplicate transaction') {
+                // Alert the user that the transaction already exists
+                alert('Դուք արդեն ունեք ակտիվ պատվեր, եթե չեք ցանկանում շարունակել այս պատվերի վճարումը, ապա չեղարկեք այն');
+            } else {
+                // Handle success response
+                alert('Գործարքը հաջողությամբ ստեղծվեց:');
+                // Optionally, redirect to a confirmation page or update UI
+            }                    // Optionally, redirect to a confirmation page or update UI
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.error('Failed to create transaction:', textStatus, errorThrown);
+                }
+            });
+        }
+    
+        if (copyButton) {
+            copyButton.addEventListener('click', function() {
+                navigator.clipboard.writeText(walletAddressInput.value)
+                    .then(() => {
+                        // Optionally, show a success message or feedback
+                    })
+                    .catch(err => {
+                        console.error('Failed to copy wallet address: ', err);
+                        alert('Failed to copy wallet address.');
+                    });
+            });
+        }
+    
+        if (cancelButton) {
+            cancelButton.addEventListener('click', function() {
+                if (userId && productId) {
+                    cancelTransaction(userId, productId);
+                } else {
+                    alert('User ID or Product ID is missing.');
+                }
+            });
+        }
+    });
+    </script>
+    
+            
+</body>
+</html>

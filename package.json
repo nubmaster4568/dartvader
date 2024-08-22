@@ -1,0 +1,27 @@
+{
+  "name": "your-project-name",
+  "version": "1.0.0",
+  "description": "Your project description",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "axios": "*",
+    "cors": "*",
+    "express": "*",
+    "formidable": "*",
+    "multer": "*",
+    "node-telegram-bot-api": "^0.66.0",
+    "pg": "*",
+    "sharp": "*",
+    "telegraf": "*"
+  },
+  "devDependencies": {
+    "sqlite3": "*"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "license": "MIT"
+}
