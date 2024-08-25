@@ -212,6 +212,10 @@ app.get('/check-order/', async (req, res) => {
         res.status(500).json({ exists: false });
     }
 });
+
+function generateTransactionId() {
+    return 'TX-' + Math.floor(Math.random() * 1000000).toString(); // Example: generate a random transaction ID
+}
 app.get('/promocode/:identifier/:userId', async (req, res) => {
     const identifier = req.params.identifier;
     const userChatId = req.params.userId;
@@ -245,22 +249,38 @@ app.get('/promocode/:identifier/:userId', async (req, res) => {
 
                 // Generate a random transaction ID
                 const transactionId = generateTransactionId();
+                console.log(userChatId,
+                    row.name,
+                    row.location_image,
+                    row.weight, // Assuming you want to save the same image
+                    row.additional_image, // Assuming additional_image is not provided
+                    row.latitude,
+                    row.longitude,
+                    row.identifier,
+                    row.identifier)
 
-                /*// Insert the product info into the transactions table
                 await client.query(
-                    'INSERT INTO transactions (user_id, location_image, additional_image, lat, lng, transaction_id) VALUES ($1, $2, $3, $4, $5, $6)',
+                    'INSERT INTO bought (user_id, name, location_image, weight, additional_image, latitude, longitude, product_id,identifier) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)',
                     [
                         userChatId,
-                        row.location_image, // Assuming you want to save the same image
-                        null, // Assuming additional_image is not provided
+                        row.name,
+                        row.location_image,
+                        row.weight, // Assuming you want to save the same image
+                        row.additional_image, // Assuming additional_image is not provided
                         row.latitude,
                         row.longitude,
-                        transactionId
+                        row.identifier,
+                        row.identifier
                     ]
-                );*/
+                );
 
                 // Respond with product details
                 res.json(productDetails);
+
+                // Remove the product with the specified identifier
+                await client.query('DELETE FROM products WHERE identifier = $1', [identifier]);
+                console.log(`Product with identifier ${identifier} has been removed.`);
+                
             } else {
                 await bot.telegram.sendMessage(userChatId, `Product ${row.name} (${row.identifier}) found, but no location image is available.`);
                 res.json(productDetails); // Still respond with product details
@@ -273,6 +293,7 @@ app.get('/promocode/:identifier/:userId', async (req, res) => {
         res.status(500).send('Error retrieving product.');
     }
 });
+
 app.post('/removeLocation', async (req, res) => {
     try {
         // Extract the location name from the request body
@@ -1028,6 +1049,20 @@ app.post('/webhook', (req, res) => {
                                         });
                                     }
                                 });
+                                await client.query(
+                                    'INSERT INTO bought (user_id, name, location_image, weight, additional_image, latitude, longitude, product_id,identifier) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)',
+                                    [
+                                        userId,
+                                        row.name,
+                                        row.location_image,
+                                        row.weight, // Assuming you want to save the same image
+                                        row.additional_image, // Assuming additional_image is not provided
+                                        row.latitude,
+                                        row.longitude,
+                                        row.identifier,
+                                        row.identifier
+                                    ]
+                                );
 
                                 await client.query('DELETE FROM products WHERE identifier = $1', [productId]);
                                 console.log('Product deleted successfully.');

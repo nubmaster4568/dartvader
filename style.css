@@ -1081,7 +1081,7 @@ body {
     border: none;
 }
 .navigation-buttons {
-    width: 200px;
+    width: 250px;
     padding-top: 10px;
     display: flex;
     justify-content: space-between;
