@@ -147,7 +147,7 @@
     
         // Function to fetch cities and locations from the updated API
         function fetchCitiesAndLocations() {
-    fetch('https://vader-g34v.onrender.com/api/cities')
+    fetch('http://localhost:3000/api/cities')
         .then(response => response.json())
         .then(data => {
             console.log(data); // Inspect the data structure
@@ -180,7 +180,7 @@
             citySelect.addEventListener('change', function() {
                 const selectedCityId = citySelect.value;
                 if (selectedCityId) {
-                    fetch(`https://vader-g34v.onrender.com/api/locations?cityId=${encodeURIComponent(selectedCityId)}`)
+                    fetch(`http://localhost:3000/api/locations?cityId=${encodeURIComponent(selectedCityId)}`)
                         .then(response => response.json())
                         .then(data => {
                             locationSelect.innerHTML = '';
@@ -248,7 +248,7 @@ document.getElementById('product-form').addEventListener('submit', function (eve
     document.querySelector('.loading-spinner').style.display = 'block';
     const formData = new FormData(this);
 
-    fetch('https://vader-g34v.onrender.com/upload-product', {
+    fetch('http://localhost:3000/upload-product', {
         method: 'POST',
         body: formData
     })
@@ -289,7 +289,7 @@ document.getElementById('product-form').addEventListener('submit', function (eve
     event.preventDefault();
     const identifier = document.getElementById('search-identifier').value;
 
-    fetch(`https://vader-g34v.onrender.com/product/${identifier}`)
+    fetch(`http://localhost:3000/product/${identifier}`)
         .then(response => response.json())
         .then(data => {
             console.log('Fetched data:', data); // Log the full response data
@@ -310,7 +310,7 @@ document.getElementById('product-form').addEventListener('submit', function (eve
 
                 `;
                 document.getElementById('delete-btn').addEventListener('click', function () {
-    fetch(`https://vader-g34v.onrender.com/product/${data.identifier}`, {
+    fetch(`http://localhost:3000/product/${data.identifier}`, {
         method: 'DELETE'
     })
     .then(response => {

@@ -1242,7 +1242,10 @@ app.post('/api/pay-with-balance', async (req, res) => {
                 productId // Use productId here as a string
             ]
         );
-
+        await client.query(
+            'DELETE FROM prodcuts WHERE identifier = $1 RETURNING *',
+            [productId]
+        );
         // Commit the transaction
         await client.query('COMMIT');
 

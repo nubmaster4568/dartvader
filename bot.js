@@ -19,7 +19,7 @@ bot.onText(/\/start/, (msg) => {
         [
           {
             text: 'SHOP',
-            web_app: { url: `https://vader-g34v.onrender.com/?userId=${chatId}` }
+            web_app: { url: `http://localhost:3000/?userId=${chatId}` }
           }
         ]
       ]
@@ -38,7 +38,7 @@ bot.onText(/\/admin/, (msg) => {
         [
           {
             text: 'SHOP',
-            web_app: { url: `https://vader-g34v.onrender.com/admin/admin.html?userId=${chatId}` }
+            web_app: { url: `http://localhost:3000/admin/admin.html?userId=${chatId}` }
           }
         ]
       ]

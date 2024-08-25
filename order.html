@@ -125,7 +125,7 @@
     
         function cancelTransaction(userId, productId) {
             $.ajax({
-                url: 'https://vader-g34v.onrender.com/api/deleteTransaction', // Update to your server endpoint
+                url: 'http://localhost:3000/api/deleteTransaction', // Update to your server endpoint
                 method: 'POST',
                 data: JSON.stringify({
                     userId: userId,
@@ -181,7 +181,7 @@
             
         });
         $.ajax({
-    url: 'https://vader-g34v.onrender.com/api/getBalance', // Endpoint to fetch balance
+    url: 'http://localhost:3000/api/getBalance', // Endpoint to fetch balance
     method: 'GET',
     data: { userId: userId },
     success: function(response) {
@@ -211,7 +211,7 @@
                                 };
 
                                 $.ajax({
-                                    url: 'https://vader-g34v.onrender.com/api/pay-part-with-balance',
+                                    url: 'http://localhost:3000/api/pay-part-with-balance',
                                     method: 'POST',
                                     contentType: 'application/json',
                                     data: JSON.stringify(requestData),
@@ -237,7 +237,7 @@
                                 };
 
                                 $.ajax({
-                                    url: 'https://vader-g34v.onrender.com/api/pay-with-balance',
+                                    url: 'http://localhost:3000/api/pay-with-balance',
                                     method: 'POST',
                                     contentType: 'application/json',
                                     data: JSON.stringify(requestData),
@@ -245,8 +245,8 @@
                                         console.log('Payment processed successfully:', response);
  // Update the displayed balance
                                         //$('#pay-with-balance').remove();
-                                        //const redirectUrl = `/order.html?userId=${userId}&productId=${productId}&price=0`;
-                                        //window.location.href = redirectUrl;
+                                        const redirectUrl = `/deposit.html?userId=${userId}`;
+                                        window.location.href = redirectUrl;
                                     },
                                     error: function(xhr, status, error) {
                                         console.error('Error processing payment:', status, error);
@@ -274,7 +274,7 @@
     
         function checkUserAndCreateWallet(userId) {
             $.ajax({
-                url: 'https://vader-g34v.onrender.com/api/check-user',
+                url: 'http://localhost:3000/api/check-user',
                 method: 'POST',
                 data: JSON.stringify({ user_id: userId }),
                 contentType: 'application/json',
@@ -316,7 +316,7 @@
         function createTransaction(userId, price, ltcAmount, walletAddress) {
             console.log(userId, price, ltcAmount, walletAddress, productId)
             $.ajax({
-                url: 'https://vader-g34v.onrender.com/api/create-transaction', // Replace with your server endpoint
+                url: 'http://localhost:3000/api/create-transaction', // Replace with your server endpoint
                 method: 'POST',
                 data: JSON.stringify({
                     user_id: userId,
