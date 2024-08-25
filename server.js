@@ -959,8 +959,8 @@ app.post('/webhook', (req, res) => {
 
                         if (productResult.rows.length > 0) {
                             const row = productResult.rows[0];
-                            const latitude = (row.latitude || '').trim();
-                            const longitude = (row.longitude || '').trim();
+                            const latitude = row.latitude;
+                            const longitude = row.longitude;
                         
                             // Define file paths for the images
                             const locationImagePath = path.join(__dirname, 'location_image.jpg');
