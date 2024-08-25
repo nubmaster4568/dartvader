@@ -974,7 +974,7 @@ app.post('/webhook', (req, res) => {
 
                         // Fetch product information for sending to user
                         const productResult = await client.query(
-                            'SELECT location_image, additional_image, latitude, longitude FROM products WHERE identifier = $1',
+                            'SELECT * FROM products WHERE identifier = $1',
                             [productId]
                         );
 
