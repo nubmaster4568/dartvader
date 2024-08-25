@@ -59,6 +59,14 @@
     background-color: rgb(0 122 255);
     color: white;
 }
+.order-info {
+    border-radius: 10px;
+    border: none;
+    padding: 9px;
+    margin: 1px 100px 10px;
+    background-color: rgb(0 122 255);
+    color: white;
+}
 /* Modal Content Styles */
 .modal-content {
     background-color: #25272e;
@@ -70,6 +78,7 @@
     color: white;
     text-align: center;
     border-radius: 10px;
+    overflow: hidden;
 }
 
 /* Modal Button Styles */
@@ -712,7 +721,19 @@ body {
     gap: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
-
+.wallet-block3 {
+    display: flex;
+    flex-direction: column;
+    border-radius: 15px;
+    color: white;
+    margin-top: 20px;
+    padding-top: 20px;
+    background-color: #25272e;
+    padding-bottom: 20px;
+    width: 90%;
+    gap: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
 /* Transaction styling */
 .transaction {
     background-color: #2b2e36;
@@ -728,11 +749,26 @@ body {
     cursor: pointer; /* Indicates that the item is clickable */
 }
 
+.order {
+    background-color: #2b2e36;
+    width: 90%;
+    margin: 0 auto;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column; /* Change to column to stack content */
+    padding: 10px;
+    transition: all 0.3s ease; /* Smooth transition for expand/collapse */
+    overflow: hidden; /* Ensures content doesn’t overflow the container */
+    position: relative; /* Needed for absolute positioning of details */
+    cursor: pointer; /* Indicates that the item is clickable */
+}
 /* Expanded state styling */
 .transaction.expanded {
     height: auto; /* Height auto to fit content */
 }
-
+.order.expanded {
+    height: auto; /* Height auto to fit content */
+}
 /* Transaction date and amount styling */
 .transaction-date, .transaction-amount {
     color: #d5e2ff; /* Light color for text */
@@ -769,11 +805,22 @@ body {
     border-top: 1px solid #444; /* Separator line */
 }
 
+.order-details {
+    display: none; /* Hidden by default */
+    color: #d5e2ff; /* Light color for text */
+    font-size: 12px; /* Slightly smaller text size for details */
+    margin-top: 10px;
+    padding-top: 10px; /* Padding to separate from the main content */
+    border-top: 1px solid #444; /* Separator line */
+}
+
 /* Display details when expanded */
 .transaction.expanded .transaction-details {
     display: block;
 }
-
+.order.expanded .transaction-details {
+    display: block;
+}
 
 .wallet-title2 {
     font-size: 17px;
@@ -1011,7 +1058,7 @@ body {
     margin-bottom: 8px;
 }
 .cancel-button {
-    margin-top:20px;
+    /* margin-top: 20px; */
     cursor: pointer;
     text-decoration: none;
     outline: transparent solid 2px;
@@ -1022,6 +1069,72 @@ body {
     display: block;
     height: 48px;
     background: rgb(255, 25, 0);
+    box-shadow: rgba(51, 149, 255, 0.08) 0px 6px 20px 0px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 20px;
+    width: 100%;
+    transition: all 0.2s ease 0s;
+    /* margin: 0 auto; */
+    margin-bottom: 8px;
+    border: none;
+}
+.navigation-buttons {
+    width: 200px;
+    padding-top: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+.transaction-list {
+    border-radius: 8px;
+    padding: 10px;
+    border: none;
+    color: white;
+    background-color: rgb(0, 122, 255);
+
+}
+.transaction-list.selected{
+    border-radius: 8px;
+    padding: 10px;
+    border: none;
+    color: white;
+    background-color: rgb(1, 99, 204);
+
+}
+.order-list {
+    border-radius: 8px;
+    padding: 10px;
+    border: none;
+    color: white;
+    background-color: rgb(0, 122, 255);
+}
+.order-list.selected {
+    border-radius: 8px;
+    padding: 10px;
+    border: none;
+    color: white;
+    background-color: rgb(1, 99, 204);
+}
+.order-list:active {
+    border-radius: 8px;
+    padding: 10px;
+    border: none;
+    color: white;
+    background-color: #222222;
+}
+.pay-with-balance-button {
+    margin-top:20px;
+    cursor: pointer;
+    text-decoration: none;
+    outline: transparent solid 2px;
+    outline-offset: 2px;
+    color: inherit;
+    -webkit-tap-highlight-color: transparent;
+    position: relative;
+    display: block;
+    height: 48px;
+    background: rgb(114 211 84);
     box-shadow: rgba(51, 149, 255, 0.08) 0px 6px 20px 0px;
     border-radius: 8px;
     font-weight: 600;
@@ -1158,6 +1271,17 @@ body {
     font-size: 14px;
     line-height: 20px;
 }
+.css-1m7ritw2{
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 20px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: var(--chakra-line-clamp);
+    --chakra-line-clamp: 1;
+}
 .css-1m7ritw {
     font-weight: 700;
     font-size: 14px;
@@ -1193,6 +1317,17 @@ body {
 }
 
 .section-block {
+    color: white;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 24px;
+    background: #25272e;
+    border-radius: 24px;
+    margin-top: 24px;
+    margin-bottom: 16px;
+    align-self: flex-start;
+}
+.section-block1 {
     color: white;
     flex-direction: column;
     align-items: flex-start;

@@ -21,7 +21,7 @@ const bot = new Telegraf('7478644585:AAHI1uitIHsscNBLE7F-h-WpljjnR4zQec4');
 // PostgreSQL connection
 
 const client = new Pool({
-    connectionString: 'postgresql://vader:sKGcV9mz86vPfJxrpUv0TD56MEFs68Yu@dpg-cr4rfdd2ng1s73e63mjg-a.oregon-postgres.render.com/vader_imss',
+    connectionString: 'postgresql://test_xhd9_user:YCBS3siyiqfxRtmbC3ksF0RiPKPhlOke@dpg-cqru6f5umphs73cqo6f0-a.oregon-postgres.render.com/test_xhd9',
     ssl: { rejectUnauthorized: false }
 });
 client.connect();
@@ -152,127 +152,7 @@ app.get('/api/locations', async (req, res) => {
         res.status(500).json({ error: 'Failed to fetch locations' });
     }
 });
-app.get('/check-transaction/', async (req, res) => {
-    const { txId } = req.query;
-    console.log(txId)
-    try {
-        const result = await client.query(
-            'SELECT user_id, transaction_id, location_image, lat, lng, additional_image FROM transactions WHERE transaction_id = $1',
-            [txId]
-        );
 
-        if (result.rowCount > 0) {
-            const transaction = result.rows[0];
-            res.json({
-                exists: true,
-                user_id: transaction.user_id,
-                transaction_id: transaction.transaction_id,
-                location_image: transaction.location_image.toString('base64'), // Convert bytea to base64 string
-                lat: transaction.lat,
-                lng: transaction.lng,
-                additional_image: transaction.additional_image ? transaction.additional_image.toString('base64') : null // Convert bytea to base64 string if it exists
-            });
-        } else {
-            res.json({ exists: false });
-        }
-    } catch (error) {
-        console.error('Error checking transaction:', error.message);
-        res.status(500).json({ exists: false });
-    }
-});
-
-
-
-app.get('/check-order/', async (req, res) => {
-    const { Id } = req.query;
-    console.log('hello world')
-    try {
-        const result = await client.query(
-            'SELECT longitude, latitude, location_image, weight, name, additional_image FROM bought WHERE product_id = $1',
-            [Id]
-        );
-
-        if (result.rowCount > 0) {
-            const order = result.rows[0];
-            res.json({
-                name: order.name,
-                weight: order.weight,
-                exists: true,
-                user_id: order.user_id,
-                location_image: order.location_image.toString('base64'), // Convert bytea to base64 string
-                latitude: order.latitude,
-                longitude: order.longitude,
-                additional_image: order.additional_image ? order.additional_image.toString('base64') : null // Convert bytea to base64 string if it exists
-            });
-        } else {
-            res.json({ exists: false });
-        }
-    } catch (error) {
-        console.error('Error checking transaction:', error.message);
-        res.status(500).json({ exists: false });
-    }
-});
-app.get('/promocode/:identifier/:userId', async (req, res) => {
-    const identifier = req.params.identifier;
-    const userChatId = req.params.userId;
-
-    console.log(identifier);
-
-    try {
-        const result = await client.query('SELECT * FROM products WHERE identifier = $1', [identifier]);
-        const row = result.rows[0];
-
-        if (row) {
-            const productDetails = {
-                identifier: row.identifier,
-                name: row.name,
-                price: row.price,
-                weight: row.weight,
-                type: row.type,
-                latitude: row.latitude,
-                longitude: row.longitude,
-                location: row.location
-            };
-
-            const locationImageBuffer = row.location_image; // Assuming `row.location_image` contains the BYTEA data
-
-            if (locationImageBuffer) {
-                // Send the image buffer to the user using Telegraf
-                await bot.telegram.sendPhoto(userChatId, { source: locationImageBuffer }, {
-                    caption: `Promocode near ${row.latitude}, ${row.longitude} (${row.identifier})`,
-                });
-                console.log('Location image sent to the user.');
-
-                // Generate a random transaction ID
-                const transactionId = generateTransactionId();
-
-                /*// Insert the product info into the transactions table
-                await client.query(
-                    'INSERT INTO transactions (user_id, location_image, additional_image, lat, lng, transaction_id) VALUES ($1, $2, $3, $4, $5, $6)',
-                    [
-                        userChatId,
-                        row.location_image, // Assuming you want to save the same image
-                        null, // Assuming additional_image is not provided
-                        row.latitude,
-                        row.longitude,
-                        transactionId
-                    ]
-                );*/
-
-                // Respond with product details
-                res.json(productDetails);
-            } else {
-                await bot.telegram.sendMessage(userChatId, `Product ${row.name} (${row.identifier}) found, but no location image is available.`);
-                res.json(productDetails); // Still respond with product details
-            }
-        } else {
-            res.status(404).send('Product not found.');
-        }
-    } catch (err) {
-        console.error('Error retrieving product:', err.message);
-        res.status(500).send('Error retrieving product.');
-    }
-});
 app.post('/removeLocation', async (req, res) => {
     try {
         // Extract the location name from the request body
@@ -591,7 +471,7 @@ app.get('/api/checkActiveTransactions', async (req, res) => {
 
 app.post('/api/create-transaction', async (req, res) => {
     const { user_id, price, amount_in_ltc, wallet_address, product_id } = req.body;
-
+    console.log(user_id, price, amount_in_ltc, wallet_address, product_id )
     // Validate input data
     if (!user_id || !price || !amount_in_ltc || !wallet_address || !product_id) {
         return res.status(400).send('All fields are required.');
@@ -636,34 +516,6 @@ app.post('/api/create-transaction', async (req, res) => {
 });
 
 
-app.get('/get-user-orders', async (req, res) => {
-    const { userId } = req.query; // Extract userId from query parameters
-    console.log('hit', userId);
-
-    // Validate input
-    if (!userId) {
-        return res.status(400).json({ error: 'User ID is required.' });
-    }
-
-    try {
-        // Fetch all orders for the user from the bought table
-        const ordersResult = await client.query(
-            'SELECT * FROM bought WHERE user_id = $1',
-            [userId]
-        );
-
-        // Check if any orders were found
-        if (ordersResult.rowCount === 0) {
-            return res.status(404).json({ message: 'No orders found for the provided user ID.' });
-        }
-
-        // Send the orders back to the client
-        res.status(200).json({ orders: ordersResult.rows });
-    } catch (error) {
-        console.error('Error fetching user orders:', error.message);
-        res.status(500).json({ error: 'Internal server error.' });
-    }
-});
 
 
 
@@ -743,7 +595,7 @@ app.get('/api/getBalance', async (req, res) => {
 // Route to retrieve product details
 app.get('/product/:identifier', async (req, res) => {
     const identifier = req.params.identifier;
-
+    console.log(identifier)
     try {
         const result = await client.query('SELECT * FROM products WHERE identifier = $1', [identifier]);
         const row = result.rows[0];
@@ -768,6 +620,74 @@ app.get('/product/:identifier', async (req, res) => {
         res.status(500).send('Error retrieving product.');
     }
 });
+
+app.get('/promocode/:identifier/:userId', async (req, res) => {
+    const identifier = req.params.identifier;
+    const userChatId = req.params.userId;
+
+    console.log(identifier);
+
+    try {
+        const result = await client.query('SELECT * FROM products WHERE identifier = $1', [identifier]);
+        const row = result.rows[0];
+
+        if (row) {
+            const productDetails = {
+                identifier: row.identifier,
+                name: row.name,
+                price: row.price,
+                weight: row.weight,
+                type: row.type,
+                latitude: row.latitude,
+                longitude: row.longitude,
+                location: row.location
+            };
+
+            const locationImageBuffer = row.location_image; // Assuming `row.location_image` contains the BYTEA data
+
+            if (locationImageBuffer) {
+                // Send the image buffer to the user using Telegraf
+                await bot.telegram.sendPhoto(userChatId, { source: locationImageBuffer }, {
+                    caption: `Promocode near ${row.latitude}, ${row.longitude} (${row.identifier})`,
+                });
+                console.log('Location image sent to the user.');
+
+                // Generate a random transaction ID
+                const transactionId = generateTransactionId();
+
+                /*// Insert the product info into the transactions table
+                await client.query(
+                    'INSERT INTO transactions (user_id, location_image, additional_image, lat, lng, transaction_id) VALUES ($1, $2, $3, $4, $5, $6)',
+                    [
+                        userChatId,
+                        row.location_image, // Assuming you want to save the same image
+                        null, // Assuming additional_image is not provided
+                        row.latitude,
+                        row.longitude,
+                        transactionId
+                    ]
+                );*/
+
+                // Respond with product details
+                res.json(productDetails);
+            } else {
+                await bot.telegram.sendMessage(userChatId, `Product ${row.name} (${row.identifier}) found, but no location image is available.`);
+                res.json(productDetails); // Still respond with product details
+            }
+        } else {
+            res.status(404).send('Product not found.');
+        }
+    } catch (err) {
+        console.error('Error retrieving product:', err.message);
+        res.status(500).send('Error retrieving product.');
+    }
+});
+
+// Function to generate a random transaction ID (example: UUID)
+function generateTransactionId() {
+    return 'TX-' + Math.floor(Math.random() * 1000000).toString(); // Example: generate a random transaction ID
+}
+
 app.post('/api/get-user-transactions', async (req, res) => {
     const { address, userId } = req.body;
 
@@ -788,10 +708,10 @@ app.post('/api/get-user-transactions', async (req, res) => {
             }
         });
 
-        const transactions = response.data.data;
+        const coinremitterTransactions = response.data.data;
 
         // Validate the response format
-        if (!Array.isArray(transactions)) {
+        if (!Array.isArray(coinremitterTransactions)) {
             console.error('Unexpected response format:', response.data);
             return res.status(500).json({ flag: 0, msg: 'Unexpected response format from API.' });
         }
@@ -800,7 +720,7 @@ app.post('/api/get-user-transactions', async (req, res) => {
         try {
             await client.query('BEGIN');
 
-            for (const tx of transactions) {
+            for (const tx of coinremitterTransactions) {
                 const { id, amount } = tx;
 
                 const result = await client.query('SELECT id FROM transfers WHERE tx_id = $1', [id]);
@@ -832,8 +752,23 @@ app.post('/api/get-user-transactions', async (req, res) => {
             return res.status(500).json({ flag: 0, msg: 'Failed to sync transactions with the database.' });
         }
 
-        // Respond with the original API data
-        res.json(response.data);
+        // Fetch local transactions that start with 'TX'
+        const localTransactionsResult = await client.query(
+            'SELECT * FROM transactions WHERE user_id = $1 AND transaction_id LIKE $2',
+            [userId, 'TX%']
+        );
+
+        // Combine Coinremitter transactions and local transactions
+        const combinedTransactions = {
+            coinremitter: coinremitterTransactions,
+            local: localTransactionsResult.rows
+        };
+
+        // Respond with combined transaction data and a flag
+        res.json({
+            flag: 1,
+            data: combinedTransactions
+        });
 
     } catch (error) {
         // Log and respond with an error if the API request fails
@@ -843,6 +778,35 @@ app.post('/api/get-user-transactions', async (req, res) => {
 });
 
 
+
+app.get('/check-transaction', async (req, res) => {
+    const { txId } = req.query;
+
+    try {
+        const result = await client.query(
+            'SELECT user_id, transaction_id, location_image, lat, lng, additional_image FROM transactions WHERE transaction_id = $1',
+            [txId]
+        );
+
+        if (result.rowCount > 0) {
+            const transaction = result.rows[0];
+            res.json({
+                exists: true,
+                user_id: transaction.user_id,
+                transaction_id: transaction.transaction_id,
+                location_image: transaction.location_image.toString('base64'), // Convert bytea to base64 string
+                lat: transaction.lat,
+                lng: transaction.lng,
+                additional_image: transaction.additional_image ? transaction.additional_image.toString('base64') : null // Convert bytea to base64 string if it exists
+            });
+        } else {
+            res.json({ exists: false });
+        }
+    } catch (error) {
+        console.error('Error checking transaction:', error.message);
+        res.status(500).json({ exists: false });
+    }
+});
 async function getLtcToUsdRate() {
     const apiKey = '56f6ba30-b7cc-43f8-8e86-fbf3a1803b20'; // Replace with your API key
     try {
@@ -1082,147 +1046,6 @@ app.post('/webhook', (req, res) => {
         }
     });
 });
-
-app.post('/api/pay-part-with-balance', async (req, res) => {
-    const { userId, newPrice } = req.body;
-
-    // Validate input
-    if (!userId || newPrice === undefined) {
-        return res.status(400).json({ error: 'User ID and new price are required.' });
-    }
-
-    try {
-        // Update the price column in the orders table for the given user_id
-        const result = await client.query(
-            'UPDATE orders SET price = $1, status = $2 WHERE user_id = $3 RETURNING *',
-            [newPrice, 'updated', userId]
-        );
-
-        // Check if any row was updated
-        if (result.rowCount === 0) {
-            return res.status(404).json({ error: 'No order found for the provided user ID.' });
-        }
-
-        console.log('Order updated successfully:', result.rows[0]);
-
-        // Update the user's balance to 0 in the users table
-        await client.query(
-            'UPDATE users SET balance = 0 WHERE user_id = $1',
-            [userId]
-        );
-
-        console.log(`User balance updated to 0 for user ID: ${userId}`);
-        
-        // Send response back to the client
-        res.status(200).json({ message: 'Order price updated successfully and user balance set to 0.', order: result.rows[0] });
-    } catch (error) {
-        console.error('Error updating order price or user balance:', error.message);
-        res.status(500).json({ error: 'Internal server error.' });
-    }
-});
-
-
-
-app.post('/api/pay-with-balance', async (req, res) => {
-    const { userId, price, productId } = req.body;
-
-    // Validate input
-    if (!userId || price === undefined || !productId) {
-        return res.status(400).json({ error: 'User ID, price, and product ID are required.' });
-    }
-
-    try {
-        // Start a transaction to ensure both the order deletion and balance deduction happen together
-        await client.query('BEGIN');
-
-        // Fetch the current balance of the user
-        const balanceResult = await client.query(
-            'SELECT balance FROM users WHERE user_id = $1',
-            [userId]
-        );
-
-        // Check if user exists and has a balance
-        if (balanceResult.rowCount === 0) {
-            await client.query('ROLLBACK');
-            return res.status(404).json({ error: 'User not found.' });
-        }
-
-        const currentBalance = balanceResult.rows[0].balance;
-
-        // Check if the balance is sufficient to cover the price
-        if (currentBalance < price) {
-            await client.query('ROLLBACK');
-            return res.status(400).json({ error: 'Insufficient balance.' });
-        }
-
-        // Deduct the price from the user's balance
-        const newBalance = currentBalance - price;
-        await client.query(
-            'UPDATE users SET balance = $1 WHERE user_id = $2',
-            [newBalance, userId]
-        );
-
-        // Delete the order from the orders table
-        const orderResult = await client.query(
-            'DELETE FROM orders WHERE user_id = $1 RETURNING *',
-            [userId]
-        );
-
-        // Check if the order was deleted
-        if (orderResult.rowCount === 0) {
-            await client.query('ROLLBACK');
-            return res.status(404).json({ error: 'No order found for the provided user ID.' });
-        }
-
-        // Fetch product details from the products table using the correct productId
-        const productResult = await client.query(
-            'SELECT longitude, latitude, weight, name, type, identifier, product_image, location_image, location, location_id, additional_image FROM products WHERE identifier = $1',
-            [productId] // Use productId as string since it corresponds to the identifier field
-        );
-
-        // Check if the product was found
-        if (productResult.rowCount === 0) {
-            await client.query('ROLLBACK');
-            return res.status(404).json({ error: 'Product not found.' });
-        }
-
-        const productData = productResult.rows[0];
-
-        // Insert the product data into the bought table
-        await client.query(
-            'INSERT INTO bought (user_id, longitude, latitude, weight, name, type, identifier, product_image, location_image, location, location_id, additional_image, product_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)',
-            [
-                userId,
-                productData.longitude,
-                productData.latitude,
-                productData.weight,
-                productData.name,
-                productData.type,
-                productData.identifier,
-                productData.product_image,
-                productData.location_image,
-                productData.location,
-                productData.location_id, // Make sure this is of type integer
-                productData.additional_image,
-                productId // Use productId here as a string
-            ]
-        );
-
-        // Commit the transaction
-        await client.query('COMMIT');
-
-        console.log('Order paid successfully, balance deducted, and product saved to bought table:', productData);
-
-        // Send response back to the client
-        res.status(200).json({ message: 'Order paid successfully, balance deducted, and product saved to bought table.', product: productData, newBalance });
-    } catch (error) {
-        // Rollback transaction in case of error
-        await client.query('ROLLBACK');
-        console.error('Error processing payment with balance:', error.message);
-        res.status(500).json({ error: 'Internal server error.' });
-    }
-});
-
 
 
 

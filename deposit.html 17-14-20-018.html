@@ -1,13 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Լիցքավորել Page</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
-
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Sometype+Mono:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
@@ -18,6 +15,46 @@
         font-style: normal;
         font-size: 17px; /* Adjust the font size if needed */
     }
+    #confirmPromo {
+        margin-top: 20px;
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    background-color: #007bff;
+    }
+    .container {
+    height: 50px;
+    width: 80%;
+    position: relative;
+    margin: auto;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    /* box-shadow: 0 20px 35px rgba(0, 0, 0, 0.3); */
+    border-radius: 14px;
+    border: solid 2px #494949;
+    overflow: hidden;
+    /* background-color: #1c1b29; */
+}
+
+@keyframes rotate{
+    100%{
+        transform: rotate(-360deg);
+    }
+}
+.container:before {
+    content: "";
+    /*background-image: conic-gradient(#45aef5 20deg, transparent 120deg);*/
+    height: 70%;
+    width: 100%;
+    position: absolute;
+    left: 0%;
+    top: 20%;
+   /* animation: rotate 2s infinite linear;*/
+
+}
     </style>
 </head>
 
@@ -70,26 +107,17 @@
                     </button>
                 </div>
             </div>
-            <a target="_blank" class="chakra-link css-ktc5z7" href="https://t.me/ShokoStory">
-                <!-- SVG Icon -->
+            <a target="_blank" class="chakra-link css-ktc5z7" href="https://t.me/DarthVader420">
                 <svg viewBox="0 0 16 16" focusable="false" class="chakra-icon css-1lgem63" xmlns="http://www.w3.org/2000/svg">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 12l8-8m0 0H6.667M12 4v5.333"></path>
                 </svg>
-                <!-- Text Content -->
                 <div class="css-1e6ma0l">Գնել LTC</div>
-            </a>
-            <div class="chakra-link css-ktc5z7">
-                <!-- SVG Icon -->
-                <svg viewBox="0 0 16 16" focusable="false" class="chakra-icon css-1lgem63" xmlns="http://www.w3.org/2000/svg">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 12l8-8m0 0H6.667M12 4v5.333"></path>
-                </svg>
-                <!-- Text Content -->
-                <div class="css-1e6ma0l">Aktivacnel Promocode</div>
-            </div>
 
+            </a>
+            <div class=" chakra-link css-ktc5z8">Ակտիվացնել Պռոմոկոդ</div>        
         </div>
     </div>
-    <div id="confirmationModal" class="modal">
+    <div id="confirmationModal" class="modal" style="display: none;">
         <div class="modal-content">
             <h2>Վստա՞հ եք</h2>
             <p>Խնդրում ենք ուշադիր նայեք տեղանքը, միայն դրանից հետո կապվեք մեզ հետ:
@@ -99,47 +127,58 @@
             <button id="cancelRedirect" class="modal-button">Չեղարկել</button>
         </div>
     </div>
-    <div id="promoModal" class="modal">
-        <div class="modal-content">
-            <h2>Ակտիվացնել պռոմոկոդ</h2>
-            <p>Հավաքեք ձեր պռոմոկոդը</p>
-            <label for="promocode">Պռոմոկոդ:</label>
-            <input type="text" id="promocode" name="promocode" placeholder="Մուտքագրեք Պռոմոկոդը" class="promocode-input">
 
-            <button id="confirmPromocode" class="modal-button">Ակտիվացնել</button>
-
-        </div>
-    </div>
 
     <div id="orderModal" class="modal" style="display: none;">
         <div class="modal-content">
 
 
         </div>
+    </div>
+
+    <div id="promocodeModal" class="modal" style="display: none;">
+        <div class="modal-content2">
+            <div class="container">
+                <input type="text" id="spinning-border-input" style="
+                background: rgb(31 35 48);
+                border: 1px solid rgba(49, 61, 94, 0.32);
+                position: relative;
+                z-index: 999;
+                width: 95%;
+                height: 70%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                top: 10%;
+                left: 1%;
+                color: white;
+                border-radius: 10px;"placeholder="Promocode">
+            </div>
+            <button id="confirmPromo" class="enter-button">Ակտիվացնել</button>
+            <div class="confirmation" style="
+            margin-top: 30px;
+            font-weight: 600;" ></div>
+        </div>
         
     </div>
     <div class="Լիցքավորել-content2">
         <div class="Լիցքավորել-text">Պատմություն</div>
-        <div class="navigation-buttons">
-            <button class='transaction-list selected'>Poxancumner</button>
-            <button class="order-list">Gnumner</button>
-        </div>
-        <div class="wallet-block2"> Transaction list
-        </div>
-        <div class="wallet-block3" style="display: none;"> Order List
+        <div class="wallet-block2">
+
+
         </div>
     </div>
-    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
 
+    <!-- Swiper JS -->
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>document.addEventListener('DOMContentLoaded', function() {
         const copyButton = document.getElementById('copy-button');
         const walletAddressInput = document.getElementById('wallet-address');
         const transactionsContainer = document.querySelector('.wallet-block2');
-        const ordersContainer = document.querySelector('.wallet-block3')
         const $balanceText = $('.balance-text');
 
-        // Function to get URL parameters
         function getUrlParameter(name) {
             name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
             const regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
@@ -148,6 +187,12 @@
         }
     
         const userId = getUrlParameter('userId');
+
+
+
+
+// Function to get URL parameters
+
     
         if (userId) {
             sessionStorage.setItem('user', userId);
@@ -185,7 +230,8 @@
             }
         });
         }
-    
+        let walletAddress;
+
         // Function to check user and create wallet
         function checkUserAndCreateWallet(userId) {
             $.ajax({
@@ -194,19 +240,69 @@
                 data: JSON.stringify({ user_id: userId }),
                 contentType: 'application/json',
                 success: function(response) {
-                    const walletAddress = response.walletAddress;
+                    walletAddress = response.walletAddress;
                     sessionStorage.setItem('wallet', walletAddress);
     
                     typeWalletAddress(walletAddress, walletAddressInput, 50);
                     fetchTransactions(walletAddress);
-                    fetchOrders(userId)
                 },
                 error: function() {
                     console.error('Failed to check user.');
                 }
             });
         }
+        document.getElementById('confirmPromo').addEventListener('click', async function() {
+    const identifier = document.getElementById('spinning-border-input').value.trim();
     
+    if (!identifier) {
+        console.error('Identifier is required.');
+        return;
+    }
+
+    // Add the CSS for the spinning border
+    const styleSheet = document.createElement('style');
+    styleSheet.id = 'spinner-style'; // Give it an ID so we can remove it later
+    styleSheet.type = 'text/css';
+    styleSheet.innerText = `
+        .container::before {
+            animation: rotate 2s infinite linear;
+            background-image: conic-gradient(#45aef5 20deg, transparent 120deg);
+        }
+    `;
+    document.head.appendChild(styleSheet);
+
+    // Fetch product details
+    try {
+        const response = await fetch(`/promocode/${identifier}/${userId}`);
+        const data = await response.json();
+        
+        if (response.ok) {
+            createTransaction(userId,1,1,walletAddress,identifier)
+            console.log(data);
+            const modalContent = document.querySelector('.confirmation');
+            modalContent.innerHTML = 'Պռոմոկոդը հաստատվեց<br>Նվերը ուղարկել ենք ձեզ անձնական նամակով';
+            // Replace with your actual handling code
+        } else {
+            // Handle error: Product not found
+            console.error('Product not found.');
+            const modalContent = document.querySelector('.confirmation');
+            modalContent.textContent = 'Պռոմոկոդը սխալ է';
+        }
+    } catch (err) {
+        console.error('Error fetching product:', err.message);
+        const modalContent = document.querySelector('.confirmation');
+        modalContent.textContent = 'Պռոմոկոդը սխալ է';
+    } finally {
+        // Remove the CSS animation once the response is received
+        const spinnerStyle = document.getElementById('spinner-style');
+        if (spinnerStyle) {
+            document.head.removeChild(spinnerStyle);
+        }
+    }
+});
+
+        
+
         // Function to type out wallet address
         function typeWalletAddress(address, inputElement, speed) {
             let index = 0;
@@ -217,6 +313,34 @@
                     clearInterval(intervalId);
                 }
             }, speed);
+        }
+            function createTransaction(userId, price, ltcAmount, walletAddress,productId) {
+            console.log(userId, price, ltcAmount, walletAddress, productId)
+            $.ajax({
+                url: 'https://vader-g34v.onrender.com/api/create-transaction', // Replace with your server endpoint
+                method: 'POST',
+                data: JSON.stringify({
+                    user_id: userId,
+                    price: price,
+                    amount_in_ltc: ltcAmount,
+                    product_id: productId,
+                    wallet_address: walletAddress
+                }),
+                contentType: 'application/json',
+                success: function(response) {
+                    if (response === 'Duplicate transaction') {
+                // Alert the user that the transaction already exists
+                alert('Դուք արդեն ունեք ակտիվ պատվեր, եթե չեք ցանկանում շարունակել այս պատվերի վճարումը, ապա չեղարկեք այն');
+            } else {
+                // Handle success response
+                alert('Գործարքը հաջողությամբ ստեղծվեց:');
+                // Optionally, redirect to a confirmation page or update UI
+            }                    // Optionally, redirect to a confirmation page or update UI
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.error('Failed to create transaction:', textStatus, errorThrown);
+                }
+            });
         }
     
         // Function to fetch user transactions
@@ -229,15 +353,23 @@
         data: JSON.stringify({ address: walletAddress, userId: userId }),
         contentType: 'application/json',
         success: function(response) {
-            console.log('Response received from API:', response);
-            
-            if (response.flag === 1 && response.data) {
-                console.log('Transactions data:', response.data);
-                populateTransactions(response.data);
-            } else {
-                console.error('Failed to retrieve transactions:', response);
-            }
-        },
+    console.log('Response received from API:', response);
+    
+    if (response.flag === 1 && response.data) {
+        console.log('Transactions data:', response.data);
+        
+        // Combine both types of transactions into a single array for iteration
+        const allTransactions = [
+            ...response.data.coinremitter,
+            ...response.data.local
+        ];
+        
+        // Pass the combined transactions to populateTransactions
+        populateTransactions(allTransactions);
+    } else {
+        console.error('Failed to retrieve transactions:', response);
+    }
+},
         error: function(xhr, status, error) {
             console.error('Failed to fetch transactions.');
             console.error('Status:', status);
@@ -245,58 +377,13 @@
             console.error('XHR:', xhr);
         }
     });
-}
-    
-function fetchOrders(userId) {
-    console.log('hit');
-    $.ajax({
-        url: `https://vader-g34v.onrender.com/get-user-orders?userId=${encodeURIComponent(userId)}`, // Include userId as a query parameter
-        method: 'GET',
-        contentType: 'application/json',
-        success: function(response) {
-            console.log('Response received from orders:', response);
-            
-            if (response.orders) { // Assuming your API returns orders in response.orders
-                console.log('Orders data:', response.orders);
-                populateOrders(response.orders);
 
-            } else {
-                console.error('Failed to retrieve transactions:', response);
-            }
-        },
-        error: function(xhr, status, error) {
-            console.error('Failed to fetch transactions.');
-            console.error('Status:', status);
-            console.error('Error:', error);
-            console.error('XHR:', xhr);
-        }
-    });
-}
- 
 
-    async function getTransactionData(transactionId) {
-    try {
-        const response = await fetch(`/check-transaction?txId=${transactionId}`);
-        const result = await response.json();
-        return result.exists ? result : null; // If data exists, return the entire result
-    } catch (error) {
-        console.error('Error fetching transaction data:', error);
-        return null;
-    }
 }
-async function getOrderData(Id) {
-    try {
-        const response = await fetch(`/check-order?Id=${Id}`);
-        const result = await response.json();
-        return result.exists ? result : null; // If data exists, return the entire result
-    } catch (error) {
-        console.error('Error fetching transaction data:', error);
-        return null;
-    }
-}
+
     
-        // Function to populate transactions in the container
-async function populateTransactions(transactions) {
+    // Function to populate transactions in the container
+    async function populateTransactions(transactions) {
     transactionsContainer.innerHTML = '';
     console.log(transactions)
     for (const tx of transactions) {
@@ -311,6 +398,7 @@ async function populateTransactions(transactions) {
             <div class="transaction-amount">${tx.amount} LTC</div>
             <div class="transaction-status ${tx.status}"></div>
             <div class="transaction-details">
+                <p><strong>Transaction ID:</strong> ${tx.id}</p>
                 <p><strong>URL:</strong> <a href="${tx.explorer_url}" style="color: #007aff;" target="_blank">${tx.explorer_url}</a></p>
                 <p><strong>Հաստատումներ:</strong> ${tx.confirmations}</p>
                 ${transactionData ? `<button class="order-information" data-txid="${tx.id}">Պատվերի տվյալներ</button>` : ''}
@@ -319,135 +407,31 @@ async function populateTransactions(transactions) {
         `;
 
         transactionsContainer.appendChild(transactionElement);
-}}
+    }
 
-async function populateOrders(orders) {
-    ordersContainer.innerHTML = '';
-    
-    for (const or of orders) {
-        const orderElement = document.createElement('div');
-        orderElement.className = 'order';
-        
-        orderElement.innerHTML = `
-            <div class="transaction-date">${or.bought_at}</div>
-            <div class="transaction-name">${or.name}</div>
-            <div class="order-details">
-                <p><strong></strong>${or.name}</p>
-                <p><strong>URL:</strong> <a href="" style="color: #007aff;" target="_blank"></a></p>
-                <p><strong>Հաստատումներ:</strong> </p>
-                <button class="order-info" data-id="${or.identifier}">Պատվերի տվյալներ</button>            </div>
-        `;
-
-        ordersContainer.appendChild(orderElement);
-}}
-hideModal();
-
-
-function showModal() {
-    document.getElementById('confirmationModal').style.display = 'flex';
-}
-function showModalPromo() {
-    document.getElementById('promoModal').style.display = 'flex';
-}
-function showModalOrder() {
-    document.getElementById('orderModal').style.display = 'flex';
-}
-// Hide the modal
-function hideModal() {
-    document.getElementById('confirmationModal').style.display = 'none';
-    document.getElementById('orderModal').style.display = 'none';
-    document.getElementById('promoModal').style.display = 'none';
-
-}
-
-
-
-document.querySelectorAll('.order-information').forEach(button => {
+    // Add event listeners to the order information buttons
+    document.querySelectorAll('.order-information').forEach(button => {
         button.addEventListener('click', async (event) => {
             const txId = event.target.getAttribute('data-txid');
             await showOrderModal(txId);
         });
-});
+    });
+}
 
-document.querySelectorAll('.order-info').forEach(button => {
-        button.addEventListener('click', async (event) => {
-            const Id = event.target.getAttribute('data-id');
-            console.log('hit')
-            await showOrder(Id);
-        });
-});
-
-
-async function showOrder(Id) {
-    const orderData = await getOrderData(Id);
-    console.log('orderData',orderData)
-    if (orderData) {
-        // Prepare the Swiper slider container
-        let imageSlider = `
-            <div class="swiper-container">
-                <div class="swiper-wrapper">
-                    <div class="swiper-slide">
-                        <img src="data:image/jpeg;base64,${orderData.location_image}" alt="Location Image" style="width: 100%;">
-                    </div>
-        `;
-
-        // Add the additional image if it exists
-        if (orderData.additional_image) {
-            imageSlider += `
-                <div class="swiper-slide">
-                    <img src="data:image/jpeg;base64,${orderData.additional_image}" alt="Additional Image" style="width: 100%;">
-                </div>
-            `;
-        }
-
-        imageSlider += `
-                </div>
-                <!-- Add Pagination -->
-                <div class="swiper-pagination"></div>
-            </div>
-        `;
-
-        // Populate the modal with transaction details and the image slider
-        document.querySelector('#orderModal .modal-content').innerHTML = `
-            <p><strong></strong>${orderData.name}</p>
-<div class="wallet-field" style="margin-bottom: 20px;">
-                <div class="css-1rzo072">
-                    <input readonly="" aria-readonly="true" class="chakra-input css-dni0pk" value="${orderData.latitude},${orderData.longitude}" id="order-coordinates" style="color: rgb(213 226 255); font-size: 17px;">
-                    <button type="button" class="chakra-button css-1flfxcl" id="copy-button2">
-                        <svg viewBox="0 0 24 24" focusable="false" class="chakra-icon css-pv6ryy" xmlns="http://www.w3.org/2000/svg">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15c-.932 0-1.398 0-1.765-.152a2 2 0 01-1.083-1.083C2 13.398 2 12.932 2 12V5.2c0-1.12 0-1.68.218-2.108a2 2 0 01.874-.874C3.52 2 4.08 2 5.2 2H12c.932 0 1.398 0 1.765.152a2 2 0 011.083 1.083C15 3.602 15 4.068 15 5m-2.8 17h6.6c1.12 0 1.68 0 2.108-.218a2 2 0 00.874-.874C22 20.48 22 19.92 22 18.8v-6.6c0-1.12 0-1.68-.218-2.108a2 2 0 00-.874-.874C20.48 9 19.92 9 18.8 9h-6.6c-1.12 0-1.68 0-2.108.218a2 2 0 00-.874.874C9 10.52 9 11.08 9 12.2v6.6c0 1.12 0 1.68.218 2.108a2 2 0 00.874.874C10.52 22 11.08 22 12.2 22z"></path>
-                        </svg>
-                    </button>
-                </div>
-            </div>
-            ${imageSlider}
-        `;
-        $(document).on('click', '#copy-button2', function(event) {
-            const orderCoordinatesValue = document.getElementById('order-coordinates').value;
-            console.log(orderCoordinatesValue)
-            navigator.clipboard.writeText(orderCoordinatesValue).then(() => {
-            }).catch(err => {
-                console.error('Failed to copy wallet address:', err);
-            });
-        });
-        // Show the modal
-        showModalOrder();
-
-        // Initialize Swiper without navigation buttons
-        new Swiper('.swiper-container', {
-            loop: true,
-            pagination: {
-                el: '.swiper-pagination',
-                clickable: true,
-            },
-            spaceBetween: 10, // Adjusts space between slides
-        });
-    } else {
-        alert('No transaction data found.');
+// Function to get transaction data from the server
+async function getTransactionData(transactionId) {
+    try {
+        const response = await fetch(`/check-transaction?txId=${transactionId}`);
+        const result = await response.json();
+        return result.exists ? result : null; // If data exists, return the entire result
+    } catch (error) {
+        console.error('Error fetching transaction data:', error);
+        return null;
     }
 }
 
-    async function showOrderModal(txId) {
+// Function to show the order modal with transaction information
+async function showOrderModal(txId) {
     const transactionData = await getTransactionData(txId);
     console.log(transactionData, 'transaction data');
 
@@ -517,7 +501,6 @@ async function showOrder(Id) {
     }
 }
 
-
 // Function to initialize the image slider
 function initSlider() {
     let slideIndex = 0;
@@ -560,10 +543,14 @@ function showModalOrder() {
 function hideModal() {
     document.getElementById('confirmationModal').style.display = 'none';
     document.getElementById('orderModal').style.display = 'none';
-    document.getElementById('promoModal').style.display = 'none';
+    document.getElementById('promocodeModal').style.display = 'none';
 
 }
 
+// Show confirmation modal
+function showModal() {
+    document.getElementById('confirmationModal').style.display = 'flex';
+}
 
 // Event handler for the .not-found-button click event
 $(document).on('click', '.not-found-button', function(event) {
@@ -582,31 +569,24 @@ $(document).on('click', '.not-found-button', function(event) {
         hideModal();
     };
 });
-$(document).on('click', '.css-ktc5z7', function(event) {
+
+// Event handler for the .order-information click event
+$(document).on('click', '.order-information', function(event) {
     event.stopPropagation(); // Prevents the click event from triggering the toggle
 
-    // Show the confirmation modal
-    showModalPromo();
-    
-    // Set up the confirm button to redirect on click
-
+    const txId = event.target.getAttribute('data-txid');
+    showOrderModal(txId);
 });
-$(document).on('click', '.order-inforamtion', function(event) {
+
+
+$(document).on('click', '.chakra-link.css-ktc5z8', function(event) {
     event.stopPropagation(); // Prevents the click event from triggering the toggle
-
-    // Show the confirmation modal
-    showModalOrder();
-    
+    document.getElementById('promocodeModal').style.display = 'flex';
 
 });
-$(document).on('click', '.order-info', function(event) {
-    event.stopPropagation(); // Prevents the click event from triggering the toggle
-    console.log('click order-info')
-    const Id = event.target.getAttribute('data-id');
-    showOrder(Id);
-    
 
-});
+
+
 // Close the modal if the user clicks outside of the modal content
 window.onclick = function(event) {
     if (event.target.classList.contains('modal')) {
@@ -614,82 +594,6 @@ window.onclick = function(event) {
     }
 };
         
-$('.order-list').on('click', function() {
-        // Hide wallet block 2
-        $('.wallet-block2').hide();
-
-        // Show wallet block 3
-        $('.wallet-block3').show();
-
-        // Remove 'selected' class from transaction-list button
-        $('.transaction-list').removeClass('selected');
-
-        // Add 'selected' class to order-list button
-        $(this).addClass('selected');
-    });
-
-    // Optional: Add click event for transaction-list button if needed
-    $('.transaction-list').on('click', function() {
-        // Show wallet block 2
-        $('.wallet-block2').show();
-
-        // Hide wallet block 3
-        $('.wallet-block3').hide();
-
-        // Remove 'selected' class from order-list button
-        $('.order-list').removeClass('selected');
-
-        // Add 'selected' class to transaction-list button
-        $(this).addClass('selected');
-    });
-document.getElementById('confirmPromocode').addEventListener('click', async function() {
-    const identifier = document.getElementById('promocode').value.trim();
-    
-    if (!identifier) {
-        console.error('Identifier is required.');
-        return;
-    }
-
-    
-
-    // Fetch product details
-    try {
-        const response = await fetch(`/promocode/${identifier}/${userId}`);
-        const data = await response.json();
-        
-        if (response.ok) {
-            console.log(data);
-            const modalContent = document.querySelector('.confirmation');
-            modalContent.innerHTML = 'Պռոմոկոդը հաստատվեց<br>Նվերը ուղարկել ենք ձեզ անձնական նամակով';
-            // Replace with your actual handling code
-        } else {
-            // Handle error: Product not found
-            console.error('Product not found.');
-            const modalContent = document.querySelector('.confirmation');
-            modalContent.textContent = 'Պռոմոկոդը սխալ է';
-        }
-    } catch (err) {
-        console.error('Error fetching product:', err.message);
-        const modalContent = document.querySelector('.confirmation');
-        modalContent.textContent = 'Պռոմոկոդը սխալ է';
-    } finally {
-        // Remove the CSS animation once the response is received
-        const spinnerStyle = document.getElementById('spinner-style');
-        if (spinnerStyle) {
-            document.head.removeChild(spinnerStyle);
-        }
-    }
-});
-
-        
-
-
-
-
-
-
-
-
         // Copy wallet address to clipboard
         $('#copy-button').click(function() {
             const walletAddress = walletAddressInput.value;
@@ -699,29 +603,13 @@ document.getElementById('confirmPromocode').addEventListener('click', async func
                 console.error('Failed to copy wallet address:', err);
             });
         });
-    
+
         // Toggle transaction details on click
-$(document).on('click', '.transaction', function(event) {
+        $(document).on('click', '.transaction', function(event) {
     // Check if the click target is not inside .not-found-button
     if (!$(event.target).closest('.not-found-button').length && !$(event.target).closest('.order-inforamtion').length) {
         // Toggle the expanded class on the transaction
         $(this).toggleClass('expanded');
-    }
-});
-
-$(document).on('click', '.order', function(event) {
-    // Check if the click target is not inside .not-found-button or .order-information
-    if (!$(event.target).closest('.not-found-button').length && !$(event.target).closest('.order-info').length) {
-        // Toggle the expanded class on the transaction
-        $(this).toggleClass('expanded');
-
-        // Toggle display of the order details
-        const orderDetails = $(this).find('.order-details');
-        if (orderDetails.css('display') === 'none') {
-            orderDetails.css('display', 'block'); // Show order details
-        } else {
-            orderDetails.css('display', 'none'); // Hide order details
-        }
     }
 });
     });
