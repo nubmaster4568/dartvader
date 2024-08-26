@@ -16,12 +16,11 @@ const sharp = require('sharp');
 
 // Replace 'YOUR_BOT_TOKEN_HERE' with your actual bot token from BotFather
 const bot = new Telegraf('7478644585:AAHI1uitIHsscNBLE7F-h-WpljjnR4zQec4');
-bot.onText(/\/start/, (msg) => {
-    const chatId = msg.chat.id;
-        console.log(chatId)
-  // Corrected variable name
-    bot.sendMessage(chatId, 'SHOP', {
+bot.start((ctx) => {
+    const chatId = ctx.chat.id;
+    console.log(chatId);
   
+    ctx.reply('SHOP', {
       reply_markup: {
         inline_keyboard: [
           [
@@ -33,14 +32,14 @@ bot.onText(/\/start/, (msg) => {
         ]
       }
     });
-    
   });
-  bot.onText(/\/admin/, (msg) => {
-    const chatId = msg.chat.id;
-        console.log(chatId)
-  // Corrected variable name
-    bot.sendMessage(chatId, 'SHOP', {
   
+  // Handle /admin command
+  bot.command('admin', (ctx) => {
+    const chatId = ctx.chat.id;
+    console.log(chatId);
+  
+    ctx.reply('SHOP', {
       reply_markup: {
         inline_keyboard: [
           [
@@ -52,8 +51,11 @@ bot.onText(/\/start/, (msg) => {
         ]
       }
     });
-    
   });
+  
+  // Start the bot
+  bot.launch();
+  
 // Create a new instance of the TelegramBot class
 // PostgreSQL connection
 

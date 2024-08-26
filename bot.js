@@ -1,19 +1,17 @@
-
-
+const { Telegraf } = require('telegraf');
 const express = require('express');
-const TelegramBot = require('node-telegram-bot-api');
 const app = express();
 const port = process.env.PORT || 32020;
 
 const token = '7478644585:AAHI1uitIHsscNBLE7F-h-WpljjnR4zQec4';
-const bot = new TelegramBot(token, { polling: true });
+const bot = new Telegraf(token);
 
-bot.onText(/\/start/, (msg) => {
-  const chatId = msg.chat.id;
-      console.log(chatId)
-// Corrected variable name
-  bot.sendMessage(chatId, 'SHOP', {
+// Handle /start command
+bot.start((ctx) => {
+  const chatId = ctx.chat.id;
+  console.log(chatId);
 
+  ctx.reply('SHOP', {
     reply_markup: {
       inline_keyboard: [
         [
@@ -25,14 +23,14 @@ bot.onText(/\/start/, (msg) => {
       ]
     }
   });
-  
 });
-bot.onText(/\/admin/, (msg) => {
-  const chatId = msg.chat.id;
-      console.log(chatId)
-// Corrected variable name
-  bot.sendMessage(chatId, 'SHOP', {
 
+// Handle /admin command
+bot.command('admin', (ctx) => {
+  const chatId = ctx.chat.id;
+  console.log(chatId);
+
+  ctx.reply('SHOP', {
     reply_markup: {
       inline_keyboard: [
         [
@@ -44,12 +42,21 @@ bot.onText(/\/admin/, (msg) => {
       ]
     }
   });
-  
-});
-app.get('/', (req, res) => {
-    res.send('Telegram Bot is running');
 });
 
-app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
+// Start the bot
+bot.launch();
+
+// Express route for the root
+app.get('/', (req, res) => {
+  res.send('Telegram Bot is running');
 });
+
+// Start the Express server
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+});
+
+// Graceful shutdown
+process.once('SIGINT', () => bot.stop('SIGINT'));
+process.once('SIGTERM', () => bot.stop('SIGTERM'));
