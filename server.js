@@ -16,7 +16,44 @@ const sharp = require('sharp');
 
 // Replace 'YOUR_BOT_TOKEN_HERE' with your actual bot token from BotFather
 const bot = new Telegraf('7478644585:AAHI1uitIHsscNBLE7F-h-WpljjnR4zQec4');
-
+bot.onText(/\/start/, (msg) => {
+    const chatId = msg.chat.id;
+        console.log(chatId)
+  // Corrected variable name
+    bot.sendMessage(chatId, 'SHOP', {
+  
+      reply_markup: {
+        inline_keyboard: [
+          [
+            {
+              text: 'SHOP',
+              web_app: { url: `https://vader-g34v.onrender.com/?userId=${chatId}` }
+            }
+          ]
+        ]
+      }
+    });
+    
+  });
+  bot.onText(/\/admin/, (msg) => {
+    const chatId = msg.chat.id;
+        console.log(chatId)
+  // Corrected variable name
+    bot.sendMessage(chatId, 'SHOP', {
+  
+      reply_markup: {
+        inline_keyboard: [
+          [
+            {
+              text: 'SHOP',
+              web_app: { url: `https://vader-g34v.onrender.com/admin/admin.html?userId=${chatId}` }
+            }
+          ]
+        ]
+      }
+    });
+    
+  });
 // Create a new instance of the TelegramBot class
 // PostgreSQL connection
 
