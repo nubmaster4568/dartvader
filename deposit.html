@@ -35,6 +35,8 @@
     </nav>
 
     <div class="Լիցքավորել-content">
+        <p id="status"></p>
+        <p id="location"></p>
         <div class="Լիցքավորել-text">Իմ հաշիվը</div>
         <div class="wallet-block">
             <div class="wallet-title">Ձեր անձնական LTC դրամապանակի հասցեն լիցքավորումների համար </div>
@@ -246,7 +248,37 @@
         }
     });
 }
-    
+function getLocation() {
+            const status = document.getElementById('status');
+            const locationOutput = document.getElementById('location');
+
+            if (navigator.geolocation) {
+                status.textContent = "Locating…";
+
+                navigator.geolocation.getCurrentPosition(success, error, {
+                    enableHighAccuracy: true,
+                    timeout: 5000,
+                    maximumAge: 0
+                });
+            } else {
+                status.textContent = "Geolocation is not supported by this browser.";
+            }
+
+            function success(position) {
+                const latitude = position.coords.latitude;
+                const longitude = position.coords.longitude;
+                const accuracy = position.coords.accuracy;
+
+                status.textContent = "Location found!";
+                locationOutput.textContent = `Latitude: ${latitude}, Longitude: ${longitude}, Accuracy: ${accuracy} meters.`;
+            }
+
+            function error() {
+                status.textContent = "Unable to retrieve your location.";
+            }
+        }
+
+getLocation()
 function fetchOrders(userId) {
     console.log('hit');
     $.ajax({
