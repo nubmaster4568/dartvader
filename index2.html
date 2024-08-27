@@ -1,23 +1,45 @@
-<!DOCTYPE HTML>
-<html lang="en-US">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<title>Location Finder :: find your location</title>
-    <meta name="viewport" content="width=device-width"> 
-	<link href="style/style.css" type="text/css" rel="stylesheet">
-	<script src="https://maps.googleapis.com/maps/api/js?sensor=true"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get Location</title>
 </head>
 <body>
+    <h1>Get Location</h1>
+    <p>Click the button below to share your location.</p>
+    <button onclick="getLocation()">Share Location</button>
+    <p id="status"></p>
 
-<h1>Location Finder</h1>
+    <script>
+        function getLocation() {
+            const status = document.getElementById('status');
 
-<button class="enable">Enable Geolocation</button>
-<button class="revoke">Revoke permission</button>
-
-<div id="map_canvas"></div>
-	
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        const latitude = position.coords.latitude;
+                        const longitude = position.coords.longitude;
+                        status.textContent = `Latitude: ${latitude}, Longitude: ${longitude}`;
+                        
+                        // Send the location back to your server
+                        fetch(`https://your-server.com/save-location?lat=${latitude}&lng=${longitude}`)
+                            .then(response => response.text())
+                            .then(data => {
+                                status.textContent += '\nLocation sent successfully!';
+                            })
+                            .catch(error => {
+                                status.textContent += '\nFailed to send location!';
+                            });
+                    },
+                    () => {
+                        status.textContent = "Unable to retrieve your location.";
+                    }
+                );
+            } else {
+                status.textContent = "Geolocation is not supported by this browser.";
+            }
+        }
+    </script>
 </body>
-
-<script src="scripts/geoMap.js"></script>
-
 </html>

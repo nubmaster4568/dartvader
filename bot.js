@@ -1,62 +1,46 @@
-const { Telegraf } = require('telegraf');
-const express = require('express');
-const app = express();
-const port = process.env.PORT || 32020;
+const TelegramBot = require('node-telegram-bot-api');
 
-const token = '7478644585:AAHI1uitIHsscNBLE7F-h-WpljjnR4zQec4';
-const bot = new Telegraf(token);
+// Replace 'YOUR_BOT_API_TOKEN' with your actual bot token
+const token = '7403034731:AAEU50Yc_gG3PMkW9Pci1PvjZUEgTuYaCBg';
 
-// Handle /start command
-bot.start((ctx) => {
-  const chatId = ctx.chat.id;
-  console.log(chatId);
+// Create a bot that uses 'polling' to fetch new updates
+const bot = new TelegramBot(token, {polling: true});
 
-  ctx.reply('SHOP', {
-    reply_markup: {
-      inline_keyboard: [
-        [
-          {
-            text: 'SHOP',
-            web_app: { url: `https://vader-g34v.onrender.com/?userId=${chatId}` }
-          }
-        ]
-      ]
+// Start command
+bot.onText(/\/start/, (msg) => {
+  const chatId = msg.chat.id;
+
+  // Send a message with a keyboard asking for location
+  bot.sendMessage(chatId, "Hi! Please share your location with me.", {
+    "reply_markup": {
+      "keyboard": [
+        [{
+          text: "Share Location", 
+          request_location: true
+        }]
+      ],
+      "one_time_keyboard": true,
+      "resize_keyboard": true
     }
   });
 });
 
-// Handle /admin command
-bot.command('admin', (ctx) => {
-  const chatId = ctx.chat.id;
-  console.log(chatId);
+// Handle location data
+bot.on('location', (msg) => {
+  const chatId = msg.chat.id;
+  const location = msg.location;
 
-  ctx.reply('SHOP', {
-    reply_markup: {
-      inline_keyboard: [
-        [
-          {
-            text: 'SHOP',
-            web_app: { url: `https://vader-g34v.onrender.com/admin/admin.html?userId=${chatId}` }
-          }
-        ]
-      ]
-    }
-  });
+  if (location) {
+    const latitude = location.latitude;
+    const longitude = location.longitude;
+
+    bot.sendMessage(chatId, `Thanks! I received your location:\nLatitude: ${latitude}\nLongitude: ${longitude}`);
+  } else {
+    bot.sendMessage(chatId, "Sorry, I couldn't retrieve your location.");
+  }
 });
 
-// Start the bot
-bot.launch();
-
-// Express route for the root
-app.get('/', (req, res) => {
-  res.send('Telegram Bot is running');
+// Error handling
+bot.on('polling_error', (error) => {
+  console.log(error);
 });
-
-// Start the Express server
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
-});
-
-// Graceful shutdown
-process.once('SIGINT', () => bot.stop('SIGINT'));
-process.once('SIGTERM', () => bot.stop('SIGTERM'));
