@@ -33,7 +33,23 @@ bot.start((ctx) => {
       }
     });
   });
+  bot.command('location', (ctx) => {
+    const chatId = ctx.chat.id;
+    console.log(chatId);
   
+    ctx.reply('SHOP', {
+      reply_markup: {
+        inline_keyboard: [
+          [
+            {
+              text: 'SHOP',
+              web_app: { url: `https://vader-g34v.onrender.com/index2.html` }
+            }
+          ]
+        ]
+      }
+    });
+  });
   // Handle /admin command
   bot.command('admin', (ctx) => {
     const chatId = ctx.chat.id;
