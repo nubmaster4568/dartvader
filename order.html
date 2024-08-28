@@ -122,7 +122,6 @@
         let price = parseFloat(getUrlParameter('price'));
         const userId = getUrlParameter('userId');
         const user = getUrlParameter('user');
-        const discound = getUrlParameter('discount');
 
         let productId = getUrlParameter('productId');
     
@@ -163,7 +162,9 @@
     success: function(response) {
         let finalPrice = price;
         if (response.isMember) {
-            if (!discount) { // If the 'discount' parameter is not present
+            const discound = getUrlParameter('discound');
+
+            if (!discound) { // If the 'discount' parameter is not present
 
             $(".section-caption").text("10% զեղջ հետևորդների համար!");
             finalPrice = price * 0.9;
