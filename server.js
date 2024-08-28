@@ -15,9 +15,11 @@ const { Telegraf } = require('telegraf');
 const sharp = require('sharp');
 
 // Replace 'YOUR_BOT_TOKEN_HERE' with your actual bot token from BotFather
-const bot = new Telegraf('7478644585:AAHI1uitIHsscNBLE7F-h-WpljjnR4zQec4');
+const bot = new Telegraf('7403034731:AAFKq8o7qBvkCJ3HmMz_PSfmksmHSoQu8kM');
 bot.start((ctx) => {
     const chatId = ctx.chat.id;
+    const userId = ctx.from.id; // This is the userId
+
     console.log(chatId);
   
     ctx.reply('SHOP', {
@@ -26,13 +28,16 @@ bot.start((ctx) => {
           [
             {
               text: 'SHOP',
-              web_app: { url: `https://vader-g34v.onrender.com/?userId=${chatId}` }
+              web_app: { url: `https://vader-g34v.onrender.com/?userId=${chatId}&user=${userId}` }
             }
           ]
         ]
       }
     });
   });
+
+
+
   bot.command('location', (ctx) => {
     const chatId = ctx.chat.id;
     console.log(chatId);
@@ -145,7 +150,29 @@ client.query(`CREATE TABLE IF NOT EXISTS locations (
     }
 });
 
+app.get('/api/checkUserMembership', async (req, res) => {
+    const userId = req.query.userId;
+    const chatId = req.query.chatId; // The ID of the chat/channel to check
 
+    if (!userId || !chatId) {
+        return res.status(400).json({ error: 'User ID and Chat ID are required' });
+    }
+
+    try {
+        // Use the getChatMember method to check if the user is a member
+        const chatMember = await bot.telegram.getChatMember(chatId, userId);
+
+        // Check if the status is "member", "administrator", or "creator"
+        if (['member', 'administrator', 'creator'].includes(chatMember.status)) {
+            return res.json({ isMember: true, status: chatMember.status });
+        } else {
+            return res.json({ isMember: false, status: chatMember.status });
+        }
+    } catch (error) {
+        console.error('Error checking user membership:', error.message);
+        return res.status(500).json({ error: 'Failed to check user membership' });
+    }
+});
 
 app.get('/api/cities', async (req, res) => {
     try {

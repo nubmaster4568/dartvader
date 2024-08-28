@@ -100,7 +100,8 @@
                 }
         
                 var userId = getUrlParameter('userId'); // Correctly get userId
-        
+                var user = getUrlParameter('user'); // Correctly get userId
+
                 if (userId) {
             // Check for active transactions
             $.ajax({
@@ -110,7 +111,7 @@
     success: function(response) {
         if (response.hasActiveTransaction) {
             const transaction = response.transaction;
-            const redirectUrl = `/order.html?userId=${transaction.user_id}&productId=${transaction.product_id}&price=${transaction.price}`;
+            const redirectUrl = `/order.html?userId=${transaction.user_id}&productId=${transaction.product_id}&price=${transaction.price}&user=${user}`;
             // Redirect to orders page with the transaction details
             window.location.href = redirectUrl;
         } else {
@@ -118,11 +119,8 @@
             $('a').each(function() {
                 var href = $(this).attr('href'); // Get the current href attribute
                 if (href) {
-                    if (href.indexOf('?') !== -1) {
-                        $(this).attr('href', href + '&userId=' + userId);
-                    } else {
-                        $(this).attr('href', href + '?userId=' + userId);
-                    }
+                var separator = href.indexOf('?') !== -1 ? '&' : '?';
+                $(this).attr('href', href + separator + 'userId=' + userId + '&user=' + user);
                 }
             });
         }
@@ -348,7 +346,7 @@
                                 productItem.find('.buy-button').on('click', function() {
                     const productId = $(this).data('id');
                     const productPrice = $(this).data('price');
-                    const orderUrl = `order.html?userId=${userId}&productId=${productId}&price=${productPrice}`;
+                    const orderUrl = `order.html?userId=${userId}&productId=${productId}&price=${productPrice}&user=${user}`;
                     window.location.href = orderUrl;
                 });
                                 productItem.find('.buy-button')

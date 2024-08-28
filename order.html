@@ -121,6 +121,8 @@
     
         let price = parseFloat(getUrlParameter('price'));
         const userId = getUrlParameter('userId');
+        const user = getUrlParameter('user');
+
         let productId = getUrlParameter('productId');
     
         function cancelTransaction(userId, productId) {
@@ -134,11 +136,11 @@
                 contentType: 'application/json',
                 success: function(response) {
                     alert('Գործարքը հաջողությամբ չեղարկվեց:');
-                    window.location.href = `index.html?userId=${userId}`;
+                    window.location.href = `index.html?userId=${userId}&user=${user}`;
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
                     console.error('Failed to cancel transaction:', textStatus, errorThrown);
-                    window.location.href = `index.html?userId=${userId}`;
+                    window.location.href = `index.html?userId=${userId}&user=${user}`;
                 }
             });
         }
@@ -244,7 +246,7 @@
                                         console.log('Payment processed successfully:', response);
  // Update the displayed balance
                                         //$('#pay-with-balance').remove();
-                                        const redirectUrl = `/deposit.html?userId=${userId}`;
+                                        const redirectUrl = `/deposit.html?userId=${userId}&user=${user}`;
                                         window.location.href = redirectUrl;
                                     },
                                     error: function(xhr, status, error) {
@@ -301,15 +303,13 @@
     
         function updateLinksWithUserId(userId) {
             $('a').each(function() {
-                let href = $(this).attr('href');
-                if (href) {
-                    if (href.indexOf('?') !== -1) {
-                        $(this).attr('href', href + '&userId=' + userId);
-                    } else {
-                        $(this).attr('href', href + '?userId=' + userId);
-                    }
-                }
-            });
+    let href = $(this).attr('href'); // Get the current href attribute
+    if (href) {
+        let separator = href.indexOf('?') !== -1 ? '&' : '?';
+        $(this).attr('href', href + separator + 'userId=' + userId + '&user=' + user);
+    }
+});
+
         }
     
         function createTransaction(userId, price, ltcAmount, walletAddress) {
