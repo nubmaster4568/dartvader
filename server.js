@@ -15,12 +15,12 @@ const { Telegraf } = require('telegraf');
 const sharp = require('sharp');
 
 // Replace 'YOUR_BOT_TOKEN_HERE' with your actual bot token from BotFather
-const bot = new Telegraf('7403034731:AAFKq8o7qBvkCJ3HmMz_PSfmksmHSoQu8kM');
+const bot = new Telegraf('7478644585:AAHI1uitIHsscNBLE7F-h-WpljjnR4zQec4');
 bot.start((ctx) => {
     const chatId = ctx.chat.id;
     const userId = ctx.from.id; // This is the userId
 
-    console.log(chatId);
+    console.log(chatId,userId);
   
     ctx.reply('SHOP', {
       reply_markup: {
@@ -152,11 +152,18 @@ client.query(`CREATE TABLE IF NOT EXISTS locations (
 
 app.get('/api/checkUserMembership', async (req, res) => {
     const userId = req.query.userId;
-    const chatId = req.query.chatId; // The ID of the chat/channel to check
+    const chatId = -1002170284387 // The ID of the chat/channel to check
 
     if (!userId || !chatId) {
         return res.status(400).json({ error: 'User ID and Chat ID are required' });
     }
+    bot.telegram.getChat('@testgroupcaht')
+    .then((chat) => {
+        console.log('Chat ID:', chat.id);
+    })
+    .catch((error) => {
+        console.error('Error fetching chat:', error.message);
+    });
 
     try {
         // Use the getChatMember method to check if the user is a member

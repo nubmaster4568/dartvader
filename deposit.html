@@ -111,7 +111,7 @@
         </div>
     </div>
 
-    <div id="orderModal" class="modal" style="display: none;">
+    <div id="orderModal" class="modal" >
         <div class="modal-content">
 
 
@@ -148,7 +148,8 @@
         }
     
         const userId = getUrlParameter('userId');
-    
+        const user = getUrlParameter('user');
+
         if (userId) {
             sessionStorage.setItem('user', userId);
             checkUserAndCreateWallet(userId);
@@ -334,7 +335,7 @@ async function populateOrders(orders) {
 
         ordersContainer.appendChild(orderElement);
 }}
-hideModal();
+
 
 
 function showModal() {
@@ -351,10 +352,10 @@ function hideModal() {
     document.getElementById('confirmationModal').style.display = 'none';
     document.getElementById('orderModal').style.display = 'none';
     document.getElementById('promoModal').style.display = 'none';
-
+    document.querySelectorAll('modal').style.display = 'none';
 }
 
-
+hideModal();
 
 document.querySelectorAll('.order-information').forEach(button => {
         button.addEventListener('click', async (event) => {
