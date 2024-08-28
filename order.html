@@ -217,11 +217,10 @@
                                     data: JSON.stringify(requestData),
                                     success: function(response) {
                                         console.log('Payment processed successfully:', response);
-                                        $(".css-1m7ritw2").text(`$0.00`); // Update the displayed price to zero
+                                        $(".css-1m7ritw2").text(`${price - balance}`); // Update the displayed price to zero
                                         $(".balance-text").text(`0.00 $`); // Update the displayed balance
                                         $('#pay-with-balance').remove();
-                                        const redirectUrl = `/order.html?userId=${userId}&productId=${productId}&price=0`;
-                                        window.location.href = redirectUrl;
+
                                     },
                                     error: function(xhr, status, error) {
                                         console.error('Error processing payment:', status, error);
