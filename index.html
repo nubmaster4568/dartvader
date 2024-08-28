@@ -111,7 +111,7 @@
     success: function(response) {
         if (response.hasActiveTransaction) {
             const transaction = response.transaction;
-            const redirectUrl = `/order.html?userId=${transaction.user_id}&productId=${transaction.product_id}&price=${transaction.price}&user=${user}`;
+            const redirectUrl = `/order.html?userId=${transaction.user_id}&productId=${transaction.product_id}&price=${transaction.price}&user=${user}&discound=no`;
             // Redirect to orders page with the transaction details
             window.location.href = redirectUrl;
         } else {
