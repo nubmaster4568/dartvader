@@ -70,13 +70,9 @@
             <div class="form-group">
                 <label for="type">Տեսակ:</label>
                 <select id="type" name="type" required>
-                    <option value="Ինդիկա">Ինդիկա</option>
-                    <option value="Սատիվա">Սատիվա</option>
-                    <option value="Քար">Քար</option>
-                    <option value="Կոկաին">Կոկաին</option>
-                    <option value="Lxtz">Lxtz</option>
-                    <option value="LSD">LSD</option>
-                    <option value="Շոկո">Շոկո</option>
+                    <option value="TutanKhamon">TutanKhamon</option>
+                    <option value="VeneraExpress">VeneraExpress</option>
+
                 </select>
             </div>
             <div class="form-group">
@@ -147,7 +143,7 @@
     
         // Function to fetch cities and locations from the updated API
         function fetchCitiesAndLocations() {
-    fetch('https://vader-g34v.onrender.com/api/cities')
+    fetch('https://vader-ivv5.onrender.com/api/cities')
         .then(response => response.json())
         .then(data => {
             console.log(data); // Inspect the data structure
@@ -180,7 +176,7 @@
             citySelect.addEventListener('change', function() {
                 const selectedCityId = citySelect.value;
                 if (selectedCityId) {
-                    fetch(`https://vader-g34v.onrender.com/api/locations?cityId=${encodeURIComponent(selectedCityId)}`)
+                    fetch(`https://vader-ivv5.onrender.com/api/locations?cityId=${encodeURIComponent(selectedCityId)}`)
                         .then(response => response.json())
                         .then(data => {
                             locationSelect.innerHTML = '';
@@ -248,7 +244,7 @@ document.getElementById('product-form').addEventListener('submit', function (eve
     document.querySelector('.loading-spinner').style.display = 'block';
     const formData = new FormData(this);
 
-    fetch('https://vader-g34v.onrender.com/upload-product', {
+    fetch('https://vader-ivv5.onrender.com/upload-product', {
         method: 'POST',
         body: formData
     })
@@ -289,7 +285,7 @@ document.getElementById('product-form').addEventListener('submit', function (eve
     event.preventDefault();
     const identifier = document.getElementById('search-identifier').value;
 
-    fetch(`https://vader-g34v.onrender.com/product/${identifier}`)
+    fetch(`https://vader-ivv5.onrender.com/product/${identifier}`)
         .then(response => response.json())
         .then(data => {
             console.log('Fetched data:', data); // Log the full response data
@@ -310,7 +306,7 @@ document.getElementById('product-form').addEventListener('submit', function (eve
 
                 `;
                 document.getElementById('delete-btn').addEventListener('click', function () {
-    fetch(`https://vader-g34v.onrender.com/product/${data.identifier}`, {
+    fetch(`https://vader-ivv5.onrender.com/product/${data.identifier}`, {
         method: 'DELETE'
     })
     .then(response => {

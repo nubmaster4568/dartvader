@@ -209,7 +209,7 @@
                 }
             });
             $.ajax({
-            url: 'https://vader-g34v.onrender.com/api/getBalance', // Endpoint to fetch balance
+            url: 'https://vader-ivv5.onrender.com/api/getBalance', // Endpoint to fetch balance
             method: 'GET',
             data: { userId: userId },
             success: function(response) {
@@ -235,7 +235,7 @@
         // Function to check user and create wallet
         function checkUserAndCreateWallet(userId) {
             $.ajax({
-                url: 'https://vader-g34v.onrender.com/api/check-user',
+                url: 'https://vader-ivv5.onrender.com/api/check-user',
                 method: 'POST',
                 data: JSON.stringify({ user_id: userId }),
                 contentType: 'application/json',
@@ -317,7 +317,7 @@
             function createTransaction(userId, price, ltcAmount, walletAddress,productId) {
             console.log(userId, price, ltcAmount, walletAddress, productId)
             $.ajax({
-                url: 'https://vader-g34v.onrender.com/api/create-transaction', // Replace with your server endpoint
+                url: 'https://vader-ivv5.onrender.com/api/create-transaction', // Replace with your server endpoint
                 method: 'POST',
                 data: JSON.stringify({
                     user_id: userId,
@@ -348,7 +348,7 @@
     console.log('Fetching transactions for wallet address:', walletAddress);
     
     $.ajax({
-        url: 'https://vader-g34v.onrender.com/api/get-user-transactions',
+        url: 'https://vader-ivv5.onrender.com/api/get-user-transactions',
         method: 'POST',
         data: JSON.stringify({ address: walletAddress, userId: userId }),
         contentType: 'application/json',

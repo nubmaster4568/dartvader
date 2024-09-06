@@ -15,7 +15,7 @@ const { Telegraf } = require('telegraf');
 const sharp = require('sharp');
 
 // Replace 'YOUR_BOT_TOKEN_HERE' with your actual bot token from BotFather
-const bot = new Telegraf('7478644585:AAHI1uitIHsscNBLE7F-h-WpljjnR4zQec4');
+const bot = new Telegraf('7478644585:AAH7jPlVO7DknohKbrLj5eENChYjqS98htE');
 bot.start((ctx) => {
     const chatId = ctx.chat.id;
     const userId = ctx.from.id; // This is the userId
@@ -28,7 +28,7 @@ bot.start((ctx) => {
           [
             {
               text: 'SHOP',
-              web_app: { url: `https://vader-g34v.onrender.com/?userId=${chatId}&user=${userId}` }
+              web_app: { url: `https://vader-ivv5.onrender.com/?userId=${chatId}&user=${userId}` }
             }
           ]
         ]
@@ -48,7 +48,7 @@ bot.start((ctx) => {
           [
             {
               text: 'SHOP',
-              web_app: { url: `https://vader-g34v.onrender.com/index2.html` }
+              web_app: { url: `https://vader-ivv5.onrender.com/index2.html` }
             }
           ]
         ]
@@ -66,7 +66,7 @@ bot.start((ctx) => {
           [
             {
               text: 'SHOP',
-              web_app: { url: `https://vader-g34v.onrender.com/admin/admin.html?userId=${chatId}` }
+              web_app: { url: `https://vader-ivv5.onrender.com/admin/admin.html?userId=${chatId}` }
             }
           ]
         ]
@@ -331,10 +331,6 @@ app.get('/promocode/:identifier/:userId', async (req, res) => {
 
             if (locationImageBuffer) {
                 // Send the image buffer to the user using Telegraf
-                await bot.telegram.sendPhoto(userChatId, { source: locationImageBuffer }, {
-                    caption: `Promocode near ${row.latitude}, ${row.longitude} (${row.identifier})`,
-                });
-                console.log('Location image sent to the user.');
 
                 // Generate a random transaction ID
                 const transactionId = generateTransactionId();

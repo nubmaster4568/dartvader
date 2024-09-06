@@ -18,7 +18,7 @@ bot.start((ctx) => {
         [
           {
             text: 'Open Shop',
-            web_app: { url: 'https://vader-g34v.onrender.com' }
+            web_app: { url: 'https://vader-ivv5.onrender.com' }
           },
           {
             text: 'Share Location',
